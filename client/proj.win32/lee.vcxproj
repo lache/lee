@@ -92,6 +92,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -126,6 +127,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -143,6 +145,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\BattleLayer.cpp" />
     <ClCompile Include="..\Classes\BuyAirplaneWindow.cpp" />
     <ClCompile Include="..\Classes\CharAnimCacheManager.cpp" />
+    <ClCompile Include="..\Classes\CheatWindow.cpp" />
     <ClCompile Include="..\Classes\FontSize.cpp" />
     <ClCompile Include="..\Classes\LaneListItem.cpp" />
     <ClCompile Include="..\Classes\LobbyLayer.cpp" />
@@ -162,6 +165,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\BattleLayer.h" />
     <ClInclude Include="..\Classes\BuyAirplaneWindow.h" />
     <ClInclude Include="..\Classes\CharAnimCacheManager.h" />
+    <ClInclude Include="..\Classes\CheatWindow.h" />
     <ClInclude Include="..\Classes\FontSize.h" />
     <ClInclude Include="..\Classes\LaneListItem.h" />
     <ClInclude Include="..\Classes\LobbyLayer.h" />

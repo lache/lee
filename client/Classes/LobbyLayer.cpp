@@ -3,6 +3,7 @@
 #include "BattleLayer.h"
 #include "ResourceBar.h"
 #include "BuyAirplaneWindow.h"
+#include "FontSize.h"
 USING_NS_CC;
 
 Scene* LobbyLayer::createScene()
@@ -47,6 +48,14 @@ bool LobbyLayer::init()
     sprite->setNormalizedPosition(Vec2::ANCHOR_MIDDLE_TOP);
     baseNode->addChild(sprite);
 
+    // 자원 표시 상단 바
+    _resBar = ResourceBar::create();
+    _resBar->setContentSize(Size(visibleSize.width, FontSize::getSmall()));
+    _resBar->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
+    _resBar->setNormalizedPosition(Vec2::ANCHOR_MIDDLE_TOP);
+    _resBar->updateGold();
+    baseNode->addChild(_resBar);
+
     // 새 탈것 추가 버튼
     auto newPlaneButtonGroup = Node::create();
     newPlaneButtonGroup->setNormalizedPosition(Vec2(0, 1.0f/3));
@@ -83,6 +92,7 @@ bool LobbyLayer::init()
 
     auto buyAirplaneWindow = BuyAirplaneWindow::create(baseNode->getContentSize());
     buyAirplaneWindow->setVisible(false);
+    buyAirplaneWindow->setPosition(Vec2(0, -FontSize::getSmall())); // ResBar 크기만큼 아래로 내린다. 더 좋은 방법이 없을까...
     baseNode->addChild(buyAirplaneWindow);
     //buyAirplaneWindow->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     //buyAirplaneWindow->setPosition(baseNode->getContentSize() / 2);

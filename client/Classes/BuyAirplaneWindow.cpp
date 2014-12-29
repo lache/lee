@@ -3,6 +3,7 @@
 #include "ResourceBar.h"
 #include "AirplaneListItem.h"
 #include "HelloWorldScene.h"
+#include "FontSize.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
@@ -77,6 +78,7 @@ bool BuyAirplaneWindow::initWithSize(const Size& size)
     auto titleButton = ui::Button::create("images/CyanSquare.png");
     titleButton->setTitleColor(Color3B::BLACK);
     titleButton->setTitleText("Select New Vehicle");
+    titleButton->setTitleFontSize(FontSize::getLarge());
     titleButton->setContentSize(Size(getContentSize().width, titleButton->getContentSize().height));
     titleButton->setScale9Enabled(true);
     //titleButton->setContentSize(Size(20, 20));

@@ -4,6 +4,7 @@
 class FontSize
 {
 public:
+    static float getVerySmall();
     static float getSmall();
     static float getNormal();
     static float getLarge();

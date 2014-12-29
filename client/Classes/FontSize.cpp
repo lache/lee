@@ -2,6 +2,12 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
+float FontSize::getVerySmall()
+{
+    const static auto v = Director::getInstance()->getOpenGLView()->getDesignResolutionSize().height / 45;
+    return v;
+}
+
 float FontSize::getSmall()
 {
     const static auto v = Director::getInstance()->getOpenGLView()->getDesignResolutionSize().height / 35;

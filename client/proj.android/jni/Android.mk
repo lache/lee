@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := lee/main.cpp \
 				   ../../Classes/AirplaneListItem.cpp \
 				   ../../Classes/SimplePopup.cpp \
 				   ../../Classes/FontSize.cpp \
+				   ../../Classes/CheatWindow.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

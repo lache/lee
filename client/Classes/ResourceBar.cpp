@@ -2,19 +2,21 @@
 #include "Player.h"
 #include "TouchableSprite.h"
 #include "FontSize.h"
-#include "cocos-ext.h"
+#include "CheatWindow.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-// on "init" you need to initialize your instance
+ResourceBar* ResourceBar::s_ins;
+
 ResourceBar* ResourceBar::create()
 {
     ResourceBar *btn = new (std::nothrow) ResourceBar;
     if (btn && btn->init())
     {
         btn->autorelease();
+        s_ins = btn;
         return btn;
     }
     CC_SAFE_DELETE(btn);
@@ -23,35 +25,23 @@ ResourceBar* ResourceBar::create()
 
 bool ResourceBar::init()
 {
+    if (Button::init("images/MagentaSquareSmall.png") == false)
+        return false;
+
     setName("ResourceBar");
+    setScale9Enabled(true);
+    setTitleFontSize(FontSize::getSmall());
+    setTitleColor(Color3B::BLACK);
 
-    _background = Sprite::create("Images/MagentaSquare.png");
-    _background->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
-    _background->setNormalizedPosition(Vec2::ANCHOR_MIDDLE_TOP);
-    addChild(_background);
-
-    _label = Label::createWithSystemFont("GOLD 0", "Arial", FontSize::getSmall());
-    _label->setColor(Color3B::BLACK);
-    _label->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
-    addChild(_label);
+    addClickEventListener([](Ref* sender)
+    {
+        CheatWindow::open();
+    });
 
     return true;
 }
 
-void ResourceBar::updateSize()
+void ResourceBar::updateGold()
 {
-    _background->setScaleX(getContentSize().width / _background->getContentSize().width);
-    _background->setScaleY(getContentSize().height / _background->getContentSize().height);
-}
-
-void ResourceBar::updateGold() const
-{
-    _label->setString(StringUtils::format("GOLD %d", Player::gold));
-}
-
-void ResourceBar::onEnter()
-{
-    Node::onEnter();
-
-    updateSize();
+    setTitleText(StringUtils::format("GOLD %d", Player::gold));
 }

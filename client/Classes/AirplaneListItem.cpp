@@ -54,12 +54,12 @@ bool AirplaneListItem::init(const std::string& normalImage, const std::string& t
 		{
 			Player::gold -= 100;
 
-            auto buttonText = StringUtils::format("Airplane %d", vehicleId);
+            auto buttonText = StringUtils::format("Air %d", vehicleId);
 			root->setLaneButtonString(BuyAirplaneWindow::s_ins->getLane(), buttonText);
 
 			root->updateResBar();
 
-			BuyAirplaneWindow::s_ins->removeFromParent();
+            BuyAirplaneWindow::s_ins->setVisible(false);
 		}
 	});
 
