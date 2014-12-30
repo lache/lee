@@ -152,6 +152,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\PopText.cpp" />
     <ClCompile Include="..\Classes\Rand.cpp" />
+    <ClCompile Include="..\Classes\RecruitButton.cpp" />
+    <ClCompile Include="..\Classes\RecruitContext.cpp" />
     <ClCompile Include="..\Classes\ResourceBar.cpp" />
     <ClCompile Include="..\Classes\SimplePopup.cpp" />
     <ClCompile Include="..\Classes\TouchableSprite.cpp" />
@@ -172,6 +174,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\PopText.h" />
     <ClInclude Include="..\Classes\Rand.h" />
+    <ClInclude Include="..\Classes\RecruitButton.h" />
+    <ClInclude Include="..\Classes\RecruitContext.h" />
     <ClInclude Include="..\Classes\ResourceBar.h" />
     <ClInclude Include="..\Classes\SimplePopup.h" />
     <ClInclude Include="..\Classes\TouchableSprite.h" />

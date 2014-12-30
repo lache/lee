@@ -4,7 +4,7 @@ USING_NS_CC;
 
 void CharAnimCacheManager::load()
 {
-	auto sbnFighter01 = SpriteBatchNode::create("001-Fighter01.png");
+	auto sbnFighter01 = SpriteBatchNode::create("images/001-Fighter01.png");
 
 	const auto spWidthCount = 4;
 	const auto spHeightCount = 4;

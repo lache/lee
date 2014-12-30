@@ -69,6 +69,12 @@
     <ClCompile Include="..\Classes\CheatWindow.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\RecruitContext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RecruitButton.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -123,6 +129,12 @@
       <Filter>src\Util</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CheatWindow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RecruitContext.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RecruitButton.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

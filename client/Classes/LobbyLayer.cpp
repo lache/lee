@@ -4,7 +4,18 @@
 #include "ResourceBar.h"
 #include "BuyAirplaneWindow.h"
 #include "FontSize.h"
+#include "PopText.h"
+#include "RecruitContext.h"
+#include "RecruitButton.h"
+#include "cocos-ext.h"
+#include "ui/CocosGUI.h"
 USING_NS_CC;
+using namespace cocos2d::ui;
+
+LobbyLayer::LobbyLayer()
+    : _recruitContext(new RecruitContext)
+{
+}
 
 Scene* LobbyLayer::createScene()
 {
@@ -92,15 +103,16 @@ bool LobbyLayer::init()
 
     auto buyAirplaneWindow = BuyAirplaneWindow::create(baseNode->getContentSize());
     buyAirplaneWindow->setVisible(false);
-    buyAirplaneWindow->setPosition(Vec2(0, -FontSize::getSmall())); // ResBar 크기만큼 아래로 내린다. 더 좋은 방법이 없을까...
+    buyAirplaneWindow->setPosition(Vec2(0, -_resBar->getContentSize().height)); // ResBar 크기만큼 아래로 내린다. 더 좋은 방법이 없을까...
     baseNode->addChild(buyAirplaneWindow);
     //buyAirplaneWindow->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     //buyAirplaneWindow->setPosition(baseNode->getContentSize() / 2);
     _buyAirplaneWindow = buyAirplaneWindow;
 
+    baseNode->addChild(RecruitButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext));
+    
     return true;
 }
-
 
 void LobbyLayer::menuCloseCallback(Ref* pSender)
 {

@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+class RecruitContext;
+
 class LobbyLayer : public cocos2d::Layer
 {
 public:
@@ -23,11 +25,15 @@ public:
     void updateResBar() const;
 
 private:
+    LobbyLayer();
+
     void createBattleButton();
 
     class BuyAirplaneWindow* _buyAirplaneWindow;
     class ResourceBar* _resBar;
     cocos2d::Node* _laneButtonGroup;
+
+    std::shared_ptr<RecruitContext> _recruitContext;
 };
 
 #endif // _LobbyScene_H_

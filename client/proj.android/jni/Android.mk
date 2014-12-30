@@ -25,6 +25,9 @@ LOCAL_SRC_FILES := lee/main.cpp \
 				   ../../Classes/SimplePopup.cpp \
 				   ../../Classes/FontSize.cpp \
 				   ../../Classes/CheatWindow.cpp \
+				   ../../Classes/RecruitContext.cpp \
+				   ../../Classes/RecruitButton.cpp \
+				   ../../Classes/CharAnimCacheManager.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
