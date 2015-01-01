@@ -1,11 +1,11 @@
-#include "RecruitContext.h"
+#include "BattleContext.h"
 #include "PopText.h"
 #include "RecruitButton.h"
 #include "SelectStageButton.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
-RecruitContext::RecruitContext()
+BattleContext::BattleContext()
     : _targetRecruitSize(0),
     _currentRecruitSize(0),
     _recruitButton(nullptr),
@@ -13,11 +13,11 @@ RecruitContext::RecruitContext()
 {
 }
 
-RecruitContext::~RecruitContext()
+BattleContext::~BattleContext()
 {
 }
 
-void RecruitContext::startRecruit(cocos2d::Node* ground, const int targetRecruitSize)
+void BattleContext::startRecruit(cocos2d::Node* ground, const int targetRecruitSize)
 {
     _targetRecruitSize += targetRecruitSize;
 
@@ -59,7 +59,7 @@ void RecruitContext::startRecruit(cocos2d::Node* ground, const int targetRecruit
     }
 }
 
-void RecruitContext::onRecruitArrived(Node* ground, Node* fighter)
+void BattleContext::onRecruitArrived(Node* ground, Node* fighter)
 {
     PopText::create(ground, fighter->getPosition(), "+1");
 
@@ -70,18 +70,13 @@ void RecruitContext::onRecruitArrived(Node* ground, Node* fighter)
         _recruitButton->setButtonState(RecruitButton::ButtonState::RECRUIT_IN_PROGRESS, _currentRecruitSize);
     }
 
-    if (_selectStageButton)
-    {
-        _selectStageButton->setButtonState(SelectStageButton::ButtonState::CAN_SELECT_STAGE, _currentRecruitSize);
-    }
-
     if (_currentRecruitSize >= _targetRecruitSize)
     {
         onRecruitFinished();
     }
 }
 
-void RecruitContext::onRecruitFinished()
+void BattleContext::onRecruitFinished()
 {
     if (_recruitButton)
     {

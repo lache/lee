@@ -9,22 +9,21 @@ USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
 
-Scene* BattleLayer::scene()
+Scene* BattleLayer::scene(std::shared_ptr<RecruitContext> recruitContext)
 {
     auto scene = Scene::create();
 
     BattleLayer *layer = BattleLayer::create();
 
     layer->setName("BattleLayer");
+    layer->setRecruitContext(recruitContext);
 
-    // add layer as a child to scene
     scene->addChild(layer);
 
     // return the scene
     return scene;
 }
 
-// on "init" you need to initialize your instance
 bool BattleLayer::init()
 {
     //////////////////////////////
@@ -41,7 +40,7 @@ bool BattleLayer::init()
     hBox->setPosition(origin + Vec2(0, visibleSize.height));
     addChild(hBox);
 
-    auto goBackButton = Button::create("Images/CyanSquare.png");
+    auto goBackButton = Button::create("images/CyanSquare.png");
     goBackButton->setTitleText("GO BACK");
     goBackButton->addClickEventListener([](Ref* sender)
     {
@@ -49,7 +48,7 @@ bool BattleLayer::init()
     });
     hBox->addChild(goBackButton);
 
-    auto resetButton = Button::create("Images/CyanSquare.png");
+    auto resetButton = Button::create("images/CyanSquare.png");
     resetButton->setTitleText("RESET");
     resetButton->addClickEventListener([this](Ref* sender)
     {
@@ -57,7 +56,7 @@ bool BattleLayer::init()
     });
     hBox->addChild(resetButton);
 
-    auto spawnTeam1 = Button::create("Images/CyanSquare.png");
+    auto spawnTeam1 = Button::create("images/CyanSquare.png");
     spawnTeam1->setTitleText("SPAWN TEAM 1");
     spawnTeam1->addClickEventListener([this](Ref* sender)
     {
@@ -65,14 +64,13 @@ bool BattleLayer::init()
     });
     hBox->addChild(spawnTeam1);
 
-    auto spawnTeam2 = Button::create("Images/CyanSquare.png");
+    auto spawnTeam2 = Button::create("images/CyanSquare.png");
     spawnTeam2->setTitleText("SPAWN TEAM 2");
     spawnTeam2->addClickEventListener([this](Ref* sender)
     {
         spawnActor(2);
     });
     hBox->addChild(spawnTeam2);
-    hBox->setScale(0.5f);
 
     _battleground = Node::create();
     _battleground->setPosition(origin);
@@ -81,6 +79,11 @@ bool BattleLayer::init()
     resetBattleground();
 
     return true;
+}
+
+void BattleLayer::setRecruitContext(std::shared_ptr<RecruitContext> recruitContext)
+{
+
 }
 
 void BattleLayer::resetBattleground()

@@ -7,6 +7,7 @@
 #include "PopText.h"
 #include "RecruitContext.h"
 #include "RecruitButton.h"
+#include "SelectStageButton.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
@@ -110,6 +111,10 @@ bool LobbyLayer::init()
     _buyAirplaneWindow = buyAirplaneWindow;
 
     baseNode->addChild(RecruitButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext));
+
+    auto selectButton = SelectStageButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext);
+    selectButton->setPosition(Vec2(baseNode->getContentSize().width / 2, getContentSize().height / 10));
+    baseNode->addChild(selectButton);
     
     return true;
 }
@@ -136,7 +141,7 @@ void LobbyLayer::createBattleButton()
     auto battleButton = LaneListItem::create("Images/CyanSquare.png", "BATTLE");
     battleButton->addClickEventListener([](Ref* sender)
     {
-        Director::getInstance()->pushScene(BattleLayer::scene());
+        Director::getInstance()->pushScene(BattleLayer::scene(std::shared_ptr<RecruitContext>(new RecruitContext)));
     });
     battleButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
     battleButton->setPosition(origin + Vec2(visibleSize.width, 0));

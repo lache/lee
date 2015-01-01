@@ -142,6 +142,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\Actor.cpp" />
     <ClCompile Include="..\Classes\AirplaneListItem.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\BattleContext.cpp" />
     <ClCompile Include="..\Classes\BattleLayer.cpp" />
     <ClCompile Include="..\Classes\BuyAirplaneWindow.cpp" />
     <ClCompile Include="..\Classes\CharAnimCacheManager.cpp" />
@@ -155,6 +156,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\RecruitButton.cpp" />
     <ClCompile Include="..\Classes\RecruitContext.cpp" />
     <ClCompile Include="..\Classes\ResourceBar.cpp" />
+    <ClCompile Include="..\Classes\SelectStageButton.cpp" />
+    <ClCompile Include="..\Classes\SelectStageWindow.cpp" />
     <ClCompile Include="..\Classes\SimplePopup.cpp" />
     <ClCompile Include="..\Classes\TouchableSprite.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,6 +167,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\AirplaneListItem.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
+    <ClInclude Include="..\Classes\BattleContext.h" />
     <ClInclude Include="..\Classes\BattleLayer.h" />
     <ClInclude Include="..\Classes\BuyAirplaneWindow.h" />
     <ClInclude Include="..\Classes\CharAnimCacheManager.h" />
@@ -177,6 +181,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\RecruitButton.h" />
     <ClInclude Include="..\Classes\RecruitContext.h" />
     <ClInclude Include="..\Classes\ResourceBar.h" />
+    <ClInclude Include="..\Classes\SelectStageButton.h" />
+    <ClInclude Include="..\Classes\SelectStageWindow.h" />
     <ClInclude Include="..\Classes\SimplePopup.h" />
     <ClInclude Include="..\Classes\TouchableSprite.h" />
     <ClInclude Include="main.h" />

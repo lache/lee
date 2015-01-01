@@ -5,11 +5,11 @@ namespace cocos2d { class Node; }
 class RecruitButton;
 class SelectStageButton;
 
-class RecruitContext
+class BattleContext
 {
 public:
-    RecruitContext();
-    ~RecruitContext();
+    BattleContext();
+    ~BattleContext();
 
     void startRecruit(cocos2d::Node* ground, const int targetRecruitSize);
     void setRecruitButton(RecruitButton* recruitButton) { _recruitButton = recruitButton; }

@@ -1,4 +1,4 @@
-#include "RecruitButton.h"
+#include "SelectStageButton.h"
 #include "TouchableSprite.h"
 #include "LobbyLayer.h"
 #include "Player.h"
@@ -6,20 +6,20 @@
 #include "SimplePopup.h"
 #include "FontSize.h"
 #include "RecruitContext.h"
+#include "SelectStageWindow.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-RecruitButton::RecruitButton()
-    : _currentRecruitSize(0)
+SelectStageButton::SelectStageButton()
 {
 }
 
-RecruitButton* RecruitButton::create(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+SelectStageButton* SelectStageButton::create(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
 {
-	RecruitButton *btn = new (std::nothrow) RecruitButton;
+	SelectStageButton *btn = new (std::nothrow) SelectStageButton;
     if (btn && btn->init(size, recruitContext))
 	{
 		btn->autorelease();
@@ -29,56 +29,48 @@ RecruitButton* RecruitButton::create(const Size& size, std::shared_ptr<RecruitCo
 	return nullptr;
 }
 
-bool RecruitButton::init(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+bool SelectStageButton::init(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
 {
-    if (Button::init("images/RecruitButton.png") == false)
+    if (Button::init("images/SelectStageButton.png") == false)
         return false;
 
     setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
-    setNormalizedPosition(Vec2::ANCHOR_MIDDLE_BOTTOM);
+    /*setNormalizedPosition(Vec2::ANCHOR_MIDDLE_BOTTOM);*/
     setTitleColor(Color3B::BLACK);
     setTitleFontSize(FontSize::getSmall());
     setScale9Enabled(true);
     setContentSize(size);
-    setButtonState(ButtonState::CAN_RECRUIT);
+    setButtonState(ButtonState::CANNOT_SELECT_STAGE);
 
-    recruitContext->setRecruitButton(this);
-
+    recruitContext->setSelectStageButton(this);
+    
     addClickEventListener([=](Ref* sender)
     {
-        setButtonState(ButtonState::RECRUIT_IN_PROGRESS, _currentRecruitSize);
-        
-        auto director = Director::getInstance();
-        auto root = director->getRunningScene()->getChildByName<LobbyLayer*>("LobbyLayer");
-
-        recruitContext->startRecruit(root, 20);
+        SelectStageWindow::open(recruitContext);
     });
 
     return true;
 }
 
-void RecruitButton::setButtonState(ButtonState state, int currentRecruitSize)
+void SelectStageButton::setButtonState(ButtonState state, int currentRecruitSize)
 {
-    _currentRecruitSize = currentRecruitSize;
-
     switch (state)
     {
     default:
-    case ButtonState::CAN_RECRUIT:
-        setTitleText(StringUtils::format("Recruit\n%d", currentRecruitSize));
-        setEnabled(true);
+    case ButtonState::CANNOT_SELECT_STAGE:
+        setTitleText(StringUtils::format("Not Enough Fighters"));
+        setEnabled(false);
         setColor(Color3B::WHITE);
         break;
-    case ButtonState::RECRUIT_IN_PROGRESS:
+    case ButtonState::CAN_SELECT_STAGE:
         startBlinkAction();
-        setTitleText(StringUtils::format("Recruit In Progress\n%d", currentRecruitSize));
-        setEnabled(false);
-        //setColor(Color3B::GRAY);
+        setTitleText(StringUtils::format("Select Stage"));
+        setEnabled(true);
         break;
     }
 }
 
-void RecruitButton::startBlinkAction()
+void SelectStageButton::startBlinkAction()
 {
     stopActionByTag(1);
 
