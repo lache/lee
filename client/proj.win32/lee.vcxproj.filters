@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\BattleContext.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BattleResultWindow.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BattleContext.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleResultWindow.h">
+      <Filter>src\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

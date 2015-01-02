@@ -4,6 +4,7 @@ namespace cocos2d { class Node; }
 
 class RecruitButton;
 class SelectStageButton;
+class Actor;
 
 class BattleContext
 {
@@ -11,17 +12,13 @@ public:
     BattleContext();
     ~BattleContext();
 
-    void startRecruit(cocos2d::Node* ground, const int targetRecruitSize);
-    void setRecruitButton(RecruitButton* recruitButton) { _recruitButton = recruitButton; }
-    void setSelectStageButton(SelectStageButton* selectStageButton) { _selectStageButton = selectStageButton; }
-    int getCurrentRecruitSize() const { return _currentRecruitSize; }
+    void setTeamSize(int team1, int team2);
+    void onActorDead(Actor* a);
 
 private:
-    void onRecruitArrived(cocos2d::Node* ground, cocos2d::Node* fighter);
-    void onRecruitFinished();
+    void onTeam1Eliminated();
+    void onTeam2Eliminated();
 
-    int _targetRecruitSize;
-    int _currentRecruitSize;
-    RecruitButton* _recruitButton;
-    SelectStageButton* _selectStageButton;
+    int _team1Size;
+    int _team2Size;
 };

@@ -28,6 +28,10 @@ LOCAL_SRC_FILES := lee/main.cpp \
 				   ../../Classes/RecruitContext.cpp \
 				   ../../Classes/RecruitButton.cpp \
 				   ../../Classes/CharAnimCacheManager.cpp \
+				   ../../Classes/BattleResultWindow.cpp \
+				   ../../Classes/BattleContext.cpp \
+				   ../../Classes/SelectStageButton.cpp \
+				   ../../Classes/SelectStageWindow.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

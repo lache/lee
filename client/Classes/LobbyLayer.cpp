@@ -141,7 +141,7 @@ void LobbyLayer::createBattleButton()
     auto battleButton = LaneListItem::create("Images/CyanSquare.png", "BATTLE");
     battleButton->addClickEventListener([](Ref* sender)
     {
-        Director::getInstance()->pushScene(BattleLayer::scene(std::shared_ptr<RecruitContext>(new RecruitContext)));
+        Director::getInstance()->pushScene(BattleLayer::scene(1, std::shared_ptr<RecruitContext>(new RecruitContext)));
     });
     battleButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
     battleButton->setPosition(origin + Vec2(visibleSize.width, 0));

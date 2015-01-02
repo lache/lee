@@ -1,14 +1,15 @@
 #include "Actor.h"
 #include <algorithm>
 #include "PopText.h"
+#include "BattleContext.h"
 USING_NS_CC;
 
 Vector<Actor*> Actor::s_actors;
 
-Actor* Actor::create(int team)
+Actor* Actor::create(int team, const std::shared_ptr<BattleContext>& battleContext)
 {
 	Actor* a = new (std::nothrow) Actor;
-	if (a && a->init(team))
+	if (a && a->init(team, battleContext))
 	{
 		a->autorelease();
 		return a;
@@ -17,7 +18,7 @@ Actor* Actor::create(int team)
 	return nullptr;
 }
 
-bool Actor::init(int team)
+bool Actor::init(int team, const std::shared_ptr<BattleContext>& battleContext)
 {
 	if (Sprite::init() == false)
 		return false;
@@ -32,10 +33,11 @@ bool Actor::init(int team)
 	_hp = 10.0f;
 	_attackPower = 3.0f;
 	_approachingToTarget = true;
+    _battleContext = battleContext;
 
 	scheduleUpdate();
 
-	runAction(RepeatForever::create(Animate::create(AnimationCache::getInstance()->getAnimation("fighter01"))));
+	runAction(RepeatForever::create(Animate::create(AnimationCache::getInstance()->getAnimation(team == 2 ? "thief03" : "fighter01"))));
 
 	s_actors.pushBack(this);
 
@@ -77,10 +79,15 @@ void Actor::update(float delta)
 
 	if (_hp <= 0)
 	{
-		runAction(Sequence::create(FadeOut::create(0.1f), RemoveSelf::create(), nullptr));
+        runAction(Sequence::create(FadeOut::create(0.1f), CallFunc::create([=] { onActorDead(); }), RemoveSelf::create(), nullptr));
 	}
 
 	_attackWait = std::max(0.0f, _attackWait - delta);
+}
+
+void Actor::onActorDead()
+{
+    _battleContext->onActorDead(this);
 }
 
 void Actor::tryFindNewTarget()

@@ -10,16 +10,16 @@ class RecruitContext;
 class SelectStageWindow : public cocos2d::ui::RelativeBox
 {
 public:
-    static void open(std::shared_ptr<RecruitContext> recruitContext);
+    static void open(const std::shared_ptr<RecruitContext>& recruitContext);
     static void close();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithSize(const cocos2d::Size& size) override;
 
 private:
-    static SelectStageWindow* create(std::shared_ptr<RecruitContext> recruitContext);
-    static cocos2d::Scene* scene(std::shared_ptr<RecruitContext> recruitContext);
-
+    static SelectStageWindow* create(const std::shared_ptr<RecruitContext>& recruitContext);
+    static cocos2d::Scene* scene(const std::shared_ptr<RecruitContext>& recruitContext);
+    void startBattle(int stageId);
     cocos2d::Node* createRootBox() const;
     cocos2d::Node* createWinTitle(const std::string& title) const;
     cocos2d::Node* createScrollView();

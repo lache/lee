@@ -9,7 +9,7 @@ class RecruitContext;
 class RecruitButton : public cocos2d::ui::Button
 {
 public:
-    static RecruitButton* create(const cocos2d::Size& size, std::shared_ptr<RecruitContext> recruitContext);
+    static RecruitButton* create(const cocos2d::Size& size, const std::shared_ptr<RecruitContext>& recruitContext);
 
     enum class ButtonState : std::int8_t
     {
@@ -20,7 +20,7 @@ public:
     void setButtonState(ButtonState state, int currentRecruitSize = 0);
 
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init(const cocos2d::Size& size, std::shared_ptr<RecruitContext> recruitContext);
+    virtual bool init(const cocos2d::Size& size, const std::shared_ptr<RecruitContext>& recruitContext);
 
 private:
     RecruitButton();

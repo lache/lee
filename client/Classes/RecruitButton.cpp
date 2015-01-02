@@ -17,7 +17,7 @@ RecruitButton::RecruitButton()
 {
 }
 
-RecruitButton* RecruitButton::create(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+RecruitButton* RecruitButton::create(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
 {
 	RecruitButton *btn = new (std::nothrow) RecruitButton;
     if (btn && btn->init(size, recruitContext))
@@ -29,7 +29,7 @@ RecruitButton* RecruitButton::create(const Size& size, std::shared_ptr<RecruitCo
 	return nullptr;
 }
 
-bool RecruitButton::init(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+bool RecruitButton::init(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
 {
     if (Button::init("images/RecruitButton.png") == false)
         return false;
@@ -50,8 +50,13 @@ bool RecruitButton::init(const Size& size, std::shared_ptr<RecruitContext> recru
         
         auto director = Director::getInstance();
         auto root = director->getRunningScene()->getChildByName<LobbyLayer*>("LobbyLayer");
-
-        recruitContext->startRecruit(root, 20);
+        auto recruitGround = root->getChildByName("RecruitGround");
+        if (recruitGround == nullptr)
+        {
+            recruitGround = Node::create();
+            root->addChild(recruitGround);
+        }
+        recruitContext->startRecruit(recruitGround, 20);
     });
 
     return true;

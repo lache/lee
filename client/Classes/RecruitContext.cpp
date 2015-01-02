@@ -9,7 +9,8 @@ RecruitContext::RecruitContext()
     : _targetRecruitSize(0),
     _currentRecruitSize(0),
     _recruitButton(nullptr),
-    _selectStageButton(nullptr)
+    _selectStageButton(nullptr),
+    _ground(nullptr)
 {
 }
 
@@ -57,6 +58,8 @@ void RecruitContext::startRecruit(cocos2d::Node* ground, const int targetRecruit
 
         ground->addChild(fighter01);
     }
+
+    _ground = ground;
 }
 
 void RecruitContext::onRecruitArrived(Node* ground, Node* fighter)
@@ -92,4 +95,18 @@ void RecruitContext::onRecruitFinished()
     {
         _selectStageButton->setButtonState(SelectStageButton::ButtonState::CAN_SELECT_STAGE, _currentRecruitSize);
     }
+}
+
+void RecruitContext::stopRecruit()
+{
+    _ground->removeAllChildren();
+}
+
+void RecruitContext::clearRecruit()
+{
+    _targetRecruitSize = 0;
+    _currentRecruitSize = 0;
+
+    _recruitButton->setButtonState(RecruitButton::ButtonState::CAN_RECRUIT, _currentRecruitSize);
+    _selectStageButton->setButtonState(SelectStageButton::ButtonState::CANNOT_SELECT_STAGE, _currentRecruitSize);
 }

@@ -1,58 +1,42 @@
-#include "SelectStageWindow.h"
+#include "BattleResultWindow.h"
 #include "Player.h"
 #include "ResourceBar.h"
 #include "AirplaneListItem.h"
 #include "HelloWorldScene.h"
-#include "BattleLayer.h"
+#include "LobbyLayer.h"
 #include "FontSize.h"
-#include "RecruitContext.h"
-
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-SelectStageWindow* SelectStageWindow::s_ins;
+BattleResultWindow* BattleResultWindow::s_ins;
 
-void SelectStageWindow::open(const std::shared_ptr<RecruitContext>& recruitContext)
+void BattleResultWindow::open(bool win, int score)
 {
     if (s_ins)
         return;
 
-    Director::getInstance()->pushScene(SelectStageWindow::scene(recruitContext));
+    Director::getInstance()->getRunningScene()->addChild(create(win, score));
 }
 
-void SelectStageWindow::close()
+void BattleResultWindow::close()
 {
     if (s_ins == nullptr)
         return;
 
-    Director::getInstance()->popScene();
+    s_ins->removeFromParent();
     s_ins = nullptr;
+
+    Director::getInstance()->popScene();
 }
 
-Scene* SelectStageWindow::scene(const std::shared_ptr<RecruitContext>& recruitContext)
+BattleResultWindow* BattleResultWindow::create(bool win, int score)
 {
-    auto scene = Scene::create();
-    
-    auto layer = SelectStageWindow::create(recruitContext);
+    auto ret = new (std::nothrow) BattleResultWindow();
 
-    layer->setName("SelectStageWindow");
-
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
-}
-
-SelectStageWindow* SelectStageWindow::create(const std::shared_ptr<RecruitContext>& recruitContext)
-{
-    auto ret = new (std::nothrow) SelectStageWindow();
-
-    if (ret && ret->initWithSize(Director::getInstance()->getVisibleSize() * 0.8f))
+    if (ret && ret->initWithData(Size(Director::getInstance()->getVisibleSize().width * 0.9f, Director::getInstance()->getVisibleSize().height / 3), win, score))
     {
-        ret->_recruitContext = recruitContext;
-        ret->setPosition(Director::getInstance()->getVisibleOrigin() + Director::getInstance()->getVisibleSize() * 0.1f);
+        ret->setPosition(Vec2(Director::getInstance()->getVisibleOrigin().x + Director::getInstance()->getVisibleSize().width / 2 - Director::getInstance()->getVisibleSize().width * 0.9f / 2, Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height / 2 - Director::getInstance()->getVisibleSize().height / 3 / 2));
         ret->autorelease();
 
         s_ins = ret;
@@ -64,15 +48,15 @@ SelectStageWindow* SelectStageWindow::create(const std::shared_ptr<RecruitContex
     return ret;
 }
 
-bool SelectStageWindow::initWithSize(const Size& size)
+bool BattleResultWindow::initWithData(const Size& size, bool win, int score)
 {
     if (RelativeBox::initWithSize(size) == false)
         return false;
 
     auto vBox = createRootBox();
-    vBox->addChild(createWinTitle("Select Stage"));
-    vBox->addChild(createScrollView());
-    vBox->addChild(createCloseButton("\nClose [X]\n "));
+    vBox->addChild(createWinTitle(win ? "WIN" : "LOSE"));
+    vBox->addChild(createScrollView(score));
+    vBox->addChild(createCloseButton("\nClose [X]\n ", score));
     addChild(vBox);
 
     vBox->getChildren().at(1)->setContentSize(getContentSize() - Size(0, vBox->getChildren().at(0)->getContentSize().height + vBox->getChildren().at(2)->getContentSize().height));
@@ -80,25 +64,25 @@ bool SelectStageWindow::initWithSize(const Size& size)
     return true;
 }
 
-Node* SelectStageWindow::createRootBox() const
+Node* BattleResultWindow::createRootBox() const
 {
     auto vBox = VBox::create();
     vBox->setContentSize(getContentSize());
     return vBox;
 }
 
-Node* SelectStageWindow::createWinTitle(const std::string& title) const
+Node* BattleResultWindow::createWinTitle(const std::string& title) const
 {
     auto button = Button::create("images/CyanSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
-    button->setTitleFontSize(FontSize::getSmall());
+    button->setTitleFontSize(FontSize::getLarge());
     button->setTitleText(title);
     button->setScale9Enabled(true);
     button->setContentSize(Size(getContentSize().width, button->getTitleRenderer()->getContentSize().height));
     return button;
 }
 
-Node* SelectStageWindow::createScrollView()
+Node* BattleResultWindow::createScrollView(int score)
 {
     auto scrollView = ui::ScrollView::create();
     scrollView->setBackGroundColorType(BackGroundColorType::SOLID);
@@ -107,7 +91,7 @@ Node* SelectStageWindow::createScrollView()
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
     //scrollView->setContentSize(Size(getContentSize().width, 2 * FontSize::getSmall()));
 
-    auto scrollViewBox = createScrollViewBox();
+    auto scrollViewBox = createScrollViewBox(score);
     scrollView->addChild(scrollViewBox);
 
     scrollView->setInnerContainerSize(scrollViewBox->getContentSize());
@@ -115,28 +99,27 @@ Node* SelectStageWindow::createScrollView()
     return scrollView;
 }
 
-void SelectStageWindow::startBattle(int stageId)
+int CalculateGoldFromScore(int score)
 {
-    close();
-
-    _recruitContext->stopRecruit();
-
-    Director::getInstance()->pushScene(BattleLayer::scene(stageId, _recruitContext));
+    return score;
 }
 
-Node* SelectStageWindow::createScrollViewBox()
+Node* BattleResultWindow::createScrollViewBox(int score)
 {
+    auto gold = CalculateGoldFromScore(score);
+
     auto vBox = VBox::create();
-    vBox->addChild(createCheatButton("\nAnyang\n ", [this]() { startBattle(1); }));
-    vBox->addChild(createCheatButton("\nJamsil\n ", [this]() { startBattle(2); }));
-    vBox->addChild(createCheatButton("\nYoido\n ", [this]() { startBattle(3); }));
-    vBox->addChild(createCheatButton("\nBeijing\n ", [this]() { startBattle(4); }));
-    vBox->addChild(createCheatButton("\nCalifornia\n ", [this]() { startBattle(5); }));
+    vBox->addChild(createCheatButton(StringUtils::format("\nReward: Gold %d\n ", gold), [=]()
+    {
+        /*Player::gold += gold;
+        ResourceBar::s_ins->updateGold();
+        close();*/
+    }));
     vBox->setContentSize(Size(getContentSize().width, sumContentSizeHeight(vBox)));
     return vBox;
 }
 
-cocos2d::Node* SelectStageWindow::createCheatButton(const std::string& title, std::function<void()> action)
+cocos2d::Node* BattleResultWindow::createCheatButton(const std::string& title, std::function<void()> action)
 {
     auto button = Button::create("images/YellowSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
@@ -151,7 +134,7 @@ cocos2d::Node* SelectStageWindow::createCheatButton(const std::string& title, st
     return button;
 }
 
-Node* SelectStageWindow::createCloseButton(const std::string& title)
+Node* BattleResultWindow::createCloseButton(const std::string& title, int score)
 {
     auto button = Button::create("images/MagentaSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
@@ -159,14 +142,18 @@ Node* SelectStageWindow::createCloseButton(const std::string& title)
     button->setTitleText(title);
     button->setScale9Enabled(true);
     button->setContentSize(Size(getContentSize().width, button->getTitleRenderer()->getContentSize().height));
-    button->addClickEventListener([this](Ref* sender)
+    button->addClickEventListener([this, score](Ref* sender)
     {
+        auto gold = CalculateGoldFromScore(score);
+
+        Player::gold += gold;
+        ResourceBar::s_ins->updateGold();
         close();
     });
     return button;
 }
 
-float SelectStageWindow::sumContentSizeHeight(cocos2d::Node* node) const
+float BattleResultWindow::sumContentSizeHeight(cocos2d::Node* node) const
 {
     auto sum = 0.0f;
     for (auto c : node->getChildren())

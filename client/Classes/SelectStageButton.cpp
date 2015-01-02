@@ -17,7 +17,7 @@ SelectStageButton::SelectStageButton()
 {
 }
 
-SelectStageButton* SelectStageButton::create(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+SelectStageButton* SelectStageButton::create(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
 {
 	SelectStageButton *btn = new (std::nothrow) SelectStageButton;
     if (btn && btn->init(size, recruitContext))
@@ -29,7 +29,7 @@ SelectStageButton* SelectStageButton::create(const Size& size, std::shared_ptr<R
 	return nullptr;
 }
 
-bool SelectStageButton::init(const Size& size, std::shared_ptr<RecruitContext> recruitContext)
+bool SelectStageButton::init(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
 {
     if (Button::init("images/SelectStageButton.png") == false)
         return false;

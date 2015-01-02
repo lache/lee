@@ -1,5 +1,7 @@
 #include "BattleLayer.h"
 #include "LaneListItem.h"
+#include "RecruitContext.h"
+#include "BattleContext.h"
 #include "Actor.h"
 #include "Rand.h"
 #include "cocos-ext.h"
@@ -9,14 +11,14 @@ USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
 
-Scene* BattleLayer::scene(std::shared_ptr<RecruitContext> recruitContext)
+Scene* BattleLayer::scene(int stageId, const std::shared_ptr<RecruitContext>& recruitContext)
 {
     auto scene = Scene::create();
 
     BattleLayer *layer = BattleLayer::create();
 
     layer->setName("BattleLayer");
-    layer->setRecruitContext(recruitContext);
+    layer->initBattleContext(stageId, recruitContext);
 
     scene->addChild(layer);
 
@@ -48,7 +50,7 @@ bool BattleLayer::init()
     });
     hBox->addChild(goBackButton);
 
-    auto resetButton = Button::create("images/CyanSquare.png");
+    /*auto resetButton = Button::create("images/CyanSquare.png");
     resetButton->setTitleText("RESET");
     resetButton->addClickEventListener([this](Ref* sender)
     {
@@ -70,7 +72,7 @@ bool BattleLayer::init()
     {
         spawnActor(2);
     });
-    hBox->addChild(spawnTeam2);
+    hBox->addChild(spawnTeam2);*/
 
     _battleground = Node::create();
     _battleground->setPosition(origin);
@@ -81,9 +83,22 @@ bool BattleLayer::init()
     return true;
 }
 
-void BattleLayer::setRecruitContext(std::shared_ptr<RecruitContext> recruitContext)
-{
+void BattleLayer::initBattleContext(int stageId, const std::shared_ptr<RecruitContext>& recruitContext)
+{   
+    _stageId = stageId;
 
+    _battleContext.reset(new BattleContext);
+
+    for (auto i = 0; i < recruitContext->getCurrentRecruitSize(); ++i)
+        spawnActor(1);
+
+    auto enemySize = 5 * stageId;
+    for (auto i = 0; i < enemySize; ++i)
+        spawnActor(2);
+
+    _battleContext->setTeamSize(recruitContext->getCurrentRecruitSize(), enemySize);
+
+    recruitContext->clearRecruit();
 }
 
 void BattleLayer::resetBattleground()
@@ -114,7 +129,7 @@ void BattleLayer::spawnActor(int team)
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    auto actor = Actor::create(team);
+    auto actor = Actor::create(team, _battleContext);
     actor->setHp(10 + Rand::get() * 10);
     actor->setMoveSpeed(50 + (-10 + Rand::get() * 20));
     const static float spawnRange = 200;

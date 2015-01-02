@@ -12,6 +12,8 @@ public:
     ~RecruitContext();
 
     void startRecruit(cocos2d::Node* ground, const int targetRecruitSize);
+    void stopRecruit();
+    void clearRecruit();
     void setRecruitButton(RecruitButton* recruitButton) { _recruitButton = recruitButton; }
     void setSelectStageButton(SelectStageButton* selectStageButton) { _selectStageButton = selectStageButton; }
     int getCurrentRecruitSize() const { return _currentRecruitSize; }
@@ -24,4 +26,5 @@ private:
     int _currentRecruitSize;
     RecruitButton* _recruitButton;
     SelectStageButton* _selectStageButton;
+    cocos2d::Node* _ground;
 };

@@ -144,6 +144,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BattleContext.cpp" />
     <ClCompile Include="..\Classes\BattleLayer.cpp" />
+    <ClCompile Include="..\Classes\BattleResultWindow.cpp" />
     <ClCompile Include="..\Classes\BuyAirplaneWindow.cpp" />
     <ClCompile Include="..\Classes\CharAnimCacheManager.cpp" />
     <ClCompile Include="..\Classes\CheatWindow.cpp" />
@@ -169,6 +170,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\AppMacros.h" />
     <ClInclude Include="..\Classes\BattleContext.h" />
     <ClInclude Include="..\Classes\BattleLayer.h" />
+    <ClInclude Include="..\Classes\BattleResultWindow.h" />
     <ClInclude Include="..\Classes\BuyAirplaneWindow.h" />
     <ClInclude Include="..\Classes\CharAnimCacheManager.h" />
     <ClInclude Include="..\Classes\CheatWindow.h" />

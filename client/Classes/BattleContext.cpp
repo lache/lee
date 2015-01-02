@@ -2,14 +2,14 @@
 #include "PopText.h"
 #include "RecruitButton.h"
 #include "SelectStageButton.h"
+#include "Actor.h"
+#include "BattleResultWindow.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
 BattleContext::BattleContext()
-    : _targetRecruitSize(0),
-    _currentRecruitSize(0),
-    _recruitButton(nullptr),
-    _selectStageButton(nullptr)
+    : _team1Size(0),
+    _team2Size(0)
 {
 }
 
@@ -17,74 +17,30 @@ BattleContext::~BattleContext()
 {
 }
 
-void BattleContext::startRecruit(cocos2d::Node* ground, const int targetRecruitSize)
+void BattleContext::setTeamSize(int team1, int team2)
 {
-    _targetRecruitSize += targetRecruitSize;
+    _team1Size = team1;
+    _team2Size = team2;
+}
+void BattleContext::onActorDead(Actor* a)
+{
+    if (a->getTeam() == 1)
+        _team1Size -= 1;
+    else
+        _team2Size -= 1;
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
-
-    std::mt19937 generator;
-
-    generator.seed(1985);
-
-    std::uniform_real_distribution<float> distribution(0, static_cast<float>(2 * M_PI));
-    auto twoPi = std::bind(distribution, generator);
-
-    std::mt19937 generator2;
-    generator2.seed(1981);
-    std::uniform_real_distribution<float> zeroOneDistribution(0, 1);
-    auto zeroOne = std::bind(zeroOneDistribution, generator2);
-    
-    for (int i = 0; i < targetRecruitSize; ++i)
-    {
-        auto theta = twoPi();
-        auto delay = zeroOne() * 5;
-
-        auto rat = theta / delay;
-
-        auto fighter01 = Sprite::create();
-        auto radius = 350;
-        fighter01->setPosition(origin + visibleSize / 2 + radius * Vec2(cosf(theta), sinf(theta)));
-        fighter01->runAction(RepeatForever::create(Animate::create(AnimationCache::getInstance()->getAnimation("fighter01"))));
-        fighter01->runAction(Sequence::create(
-            DelayTime::create(delay),
-            MoveTo::create(1, origin + visibleSize / 2),
-            DelayTime::create(0.1f),
-            CallFunc::create([=]() { onRecruitArrived(ground, fighter01); }),
-            RemoveSelf::create(),
-            nullptr));
-
-        ground->addChild(fighter01);
-    }
+    if (_team1Size <= 0)
+        onTeam1Eliminated();
+    else if (_team2Size <= 0)
+        onTeam2Eliminated();
 }
 
-void BattleContext::onRecruitArrived(Node* ground, Node* fighter)
+void BattleContext::onTeam1Eliminated()
 {
-    PopText::create(ground, fighter->getPosition(), "+1");
-
-    _currentRecruitSize++;
-
-    if (_recruitButton)
-    {
-        _recruitButton->setButtonState(RecruitButton::ButtonState::RECRUIT_IN_PROGRESS, _currentRecruitSize);
-    }
-
-    if (_currentRecruitSize >= _targetRecruitSize)
-    {
-        onRecruitFinished();
-    }
+    BattleResultWindow::open(false, 10);
 }
 
-void BattleContext::onRecruitFinished()
+void BattleContext::onTeam2Eliminated()
 {
-    if (_recruitButton)
-    {
-        _recruitButton->setButtonState(RecruitButton::ButtonState::CAN_RECRUIT, _currentRecruitSize);
-    }
-
-    if (_selectStageButton)
-    {
-        _selectStageButton->setButtonState(SelectStageButton::ButtonState::CAN_SELECT_STAGE, _currentRecruitSize);
-    }
+    BattleResultWindow::open(true, 100);
 }
