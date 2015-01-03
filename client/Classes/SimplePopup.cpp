@@ -1,8 +1,8 @@
 #include "SimplePopup.h"
 #include "TouchableSprite.h"
-#include "HelloWorldScene.h"
+
 #include "Player.h"
-#include "BuyAirplaneWindow.h"
+#include "BuyVehicleWindow.h"
 #include "FontSize.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"

@@ -2,7 +2,7 @@
 #include "LaneListItem.h"
 #include "BattleLayer.h"
 #include "ResourceBar.h"
-#include "BuyAirplaneWindow.h"
+#include "BuyVehicleWindow.h"
 #include "FontSize.h"
 #include "PopText.h"
 #include "RecruitContext.h"
@@ -81,18 +81,7 @@ bool LobbyLayer::init()
         {
             //CCLOG(("Click " + std::to_string(i)).c_str());
 
-            /*if (_buyAirplaneWindow->getParent() != nullptr)
-            {
-                _buyAirplaneWindow->removeFromParent();
-            }
-            else
-            {
-                baseNode->addChild(_buyAirplaneWindow);
-                _buyAirplaneWindow->setLane(i);
-            }*/
-
-            _buyAirplaneWindow->setVisible(_buyAirplaneWindow->isVisible() == false);
-            _buyAirplaneWindow->setLane(i);
+            BuyVehicleWindow::open(i);
         });
         sprite->setAnchorPoint(Vec2::ZERO);
         sprite->setScaleX(newPlaneButtonGroup->getContentSize().width / sprite->getContentSize().width / 4);
@@ -101,15 +90,7 @@ bool LobbyLayer::init()
         newPlaneButtonGroup->addChild(sprite);
     }
     _laneButtonGroup = newPlaneButtonGroup;
-
-    auto buyAirplaneWindow = BuyAirplaneWindow::create(baseNode->getContentSize());
-    buyAirplaneWindow->setVisible(false);
-    buyAirplaneWindow->setPosition(Vec2(0, -_resBar->getContentSize().height)); // ResBar 크기만큼 아래로 내린다. 더 좋은 방법이 없을까...
-    baseNode->addChild(buyAirplaneWindow);
-    //buyAirplaneWindow->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    //buyAirplaneWindow->setPosition(baseNode->getContentSize() / 2);
-    _buyAirplaneWindow = buyAirplaneWindow;
-
+        
     baseNode->addChild(RecruitButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext));
 
     auto selectButton = SelectStageButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext);

@@ -29,7 +29,7 @@ private:
 
     void createBattleButton();
 
-    class BuyAirplaneWindow* _buyAirplaneWindow;
+    class BuyVehicleWindow* _buyAirplaneWindow;
     class ResourceBar* _resBar;
     cocos2d::Node* _laneButtonGroup;
 

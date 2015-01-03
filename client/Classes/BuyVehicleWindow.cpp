@@ -1,58 +1,52 @@
-#include "SelectStageWindow.h"
+#include "BuyVehicleWindow.h"
 #include "Player.h"
 #include "ResourceBar.h"
 
-
-#include "BattleLayer.h"
+#include "SimplePopup.h"
+#include "LobbyLayer.h"
 #include "FontSize.h"
-#include "RecruitContext.h"
-
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-SelectStageWindow* SelectStageWindow::s_ins;
+BuyVehicleWindow* BuyVehicleWindow::s_ins;
 
-void SelectStageWindow::open(const std::shared_ptr<RecruitContext>& recruitContext)
+BuyVehicleWindow::BuyVehicleWindow()
+    : _laneId(0)
+{
+}
+
+BuyVehicleWindow::~BuyVehicleWindow()
+{
+}
+
+void BuyVehicleWindow::open(int laneId)
 {
     if (s_ins)
         return;
 
-    Director::getInstance()->pushScene(SelectStageWindow::scene(recruitContext));
+    Director::getInstance()->getRunningScene()->addChild(create(laneId));
 }
 
-void SelectStageWindow::close()
+void BuyVehicleWindow::close()
 {
     if (s_ins == nullptr)
         return;
 
-    Director::getInstance()->popScene();
+    s_ins->removeFromParent();
     s_ins = nullptr;
 }
 
-Scene* SelectStageWindow::scene(const std::shared_ptr<RecruitContext>& recruitContext)
+BuyVehicleWindow* BuyVehicleWindow::create(int laneId)
 {
-    auto scene = Scene::create();
-    
-    auto layer = SelectStageWindow::create(recruitContext);
+    auto ret = new (std::nothrow) BuyVehicleWindow();
 
-    layer->setName("SelectStageWindow");
+    const auto marginWidth = 50;
+    const auto marginHeight = 50;
 
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
-}
-
-SelectStageWindow* SelectStageWindow::create(const std::shared_ptr<RecruitContext>& recruitContext)
-{
-    auto ret = new (std::nothrow) SelectStageWindow();
-
-    if (ret && ret->initWithSize(Director::getInstance()->getVisibleSize() * 0.8f))
+    if (ret && ret->initWithLaneId(Director::getInstance()->getVisibleSize() - Size(marginWidth * 2, marginHeight * 2), laneId))
     {
-        ret->_recruitContext = recruitContext;
-        ret->setPosition(Director::getInstance()->getVisibleOrigin() + Director::getInstance()->getVisibleSize() * 0.1f);
+        ret->setPosition(Director::getInstance()->getVisibleOrigin() + Vec2(marginWidth, marginHeight));
         ret->autorelease();
 
         s_ins = ret;
@@ -64,13 +58,15 @@ SelectStageWindow* SelectStageWindow::create(const std::shared_ptr<RecruitContex
     return ret;
 }
 
-bool SelectStageWindow::initWithSize(const Size& size)
+bool BuyVehicleWindow::initWithLaneId(const Size& size, int laneId)
 {
     if (RelativeBox::initWithSize(size) == false)
         return false;
 
+    _laneId = laneId;
+
     auto vBox = createRootBox();
-    vBox->addChild(createWinTitle("Select Stage"));
+    vBox->addChild(createWinTitle("New Vehicle"));
     vBox->addChild(createScrollView());
     vBox->addChild(createCloseButton("\nClose [X]\n "));
     addChild(vBox);
@@ -80,14 +76,14 @@ bool SelectStageWindow::initWithSize(const Size& size)
     return true;
 }
 
-Node* SelectStageWindow::createRootBox() const
+Node* BuyVehicleWindow::createRootBox() const
 {
     auto vBox = VBox::create();
     vBox->setContentSize(getContentSize());
     return vBox;
 }
 
-Node* SelectStageWindow::createWinTitle(const std::string& title) const
+Node* BuyVehicleWindow::createWinTitle(const std::string& title) const
 {
     auto button = Button::create("images/CyanSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
@@ -98,7 +94,7 @@ Node* SelectStageWindow::createWinTitle(const std::string& title) const
     return button;
 }
 
-Node* SelectStageWindow::createScrollView()
+Node* BuyVehicleWindow::createScrollView()
 {
     auto scrollView = ui::ScrollView::create();
     scrollView->setBackGroundColorType(BackGroundColorType::SOLID);
@@ -115,43 +111,60 @@ Node* SelectStageWindow::createScrollView()
     return scrollView;
 }
 
-void SelectStageWindow::startBattle(int stageId)
-{
-    close();
-
-    _recruitContext->stopRecruit();
-
-    Director::getInstance()->pushScene(BattleLayer::scene(stageId, _recruitContext));
-}
-
-Node* SelectStageWindow::createScrollViewBox()
+Node* BuyVehicleWindow::createScrollViewBox()
 {
     auto vBox = VBox::create();
-    vBox->addChild(createCheatButton("\nAnyang\n ", [this]() { startBattle(1); }));
-    vBox->addChild(createCheatButton("\nJamsil\n ", [this]() { startBattle(2); }));
-    vBox->addChild(createCheatButton("\nYoido\n ", [this]() { startBattle(3); }));
-    vBox->addChild(createCheatButton("\nBeijing\n ", [this]() { startBattle(4); }));
-    vBox->addChild(createCheatButton("\nCalifornia\n ", [this]() { startBattle(5); }));
+    vBox->addChild(createVehicleButton(1));
+    vBox->addChild(createVehicleButton(2));
+    vBox->addChild(createVehicleButton(3));
     vBox->setContentSize(Size(getContentSize().width, sumContentSizeHeight(vBox)));
     return vBox;
 }
 
-cocos2d::Node* SelectStageWindow::createCheatButton(const std::string& title, std::function<void()> action)
+int CalculatePriceFromVehicleId(int vehicleId)
+{
+    return vehicleId * 100;
+}
+
+cocos2d::Node* BuyVehicleWindow::createVehicleButton(int vehicleId)
 {
     auto button = Button::create("images/YellowSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
     button->setTitleFontSize(FontSize::getVerySmall());
-    button->setTitleText(title);
+    button->setTitleText(StringUtils::format("\nVehicle ID %d - Gold %d\n ", vehicleId, CalculatePriceFromVehicleId(vehicleId)));
     button->setScale9Enabled(true);
     button->setContentSize(Size(getContentSize().width, button->getTitleRenderer()->getContentSize().height));
-    button->addClickEventListener([action](Ref* sender)
+    button->addClickEventListener([button, vehicleId](Ref* sender)
     {
-        action();
+        CCLOG("Vehicle ID %d clicked, position = (%f, %f)", vehicleId, button->getPosition().x, button->getPosition().y);
+
+        auto director = Director::getInstance();
+        auto root = director->getRunningScene()->getChildByName<LobbyLayer*>("LobbyLayer");
+
+        auto price = CalculatePriceFromVehicleId(vehicleId);
+        if (Player::gold < price)
+        {
+            auto popup = SimplePopup::create("** Insufficient funds **", Color4B::RED);
+            popup->runAction(Sequence::create(DelayTime::create(1), FadeOut::create(0.3f), RemoveSelf::create(), nullptr));
+
+            root->addChild(popup);
+        }
+        else
+        {
+            Player::gold -= price;
+
+            auto buttonText = StringUtils::format("V %d", vehicleId);
+            root->setLaneButtonString(BuyVehicleWindow::s_ins->getLane(), buttonText);
+
+            root->updateResBar();
+
+            BuyVehicleWindow::close();
+        }
     });
     return button;
 }
 
-Node* SelectStageWindow::createCloseButton(const std::string& title)
+Node* BuyVehicleWindow::createCloseButton(const std::string& title)
 {
     auto button = Button::create("images/MagentaSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
@@ -166,7 +179,7 @@ Node* SelectStageWindow::createCloseButton(const std::string& title)
     return button;
 }
 
-float SelectStageWindow::sumContentSizeHeight(cocos2d::Node* node) const
+float BuyVehicleWindow::sumContentSizeHeight(cocos2d::Node* node) const
 {
     auto sum = 0.0f;
     for (auto c : node->getChildren())

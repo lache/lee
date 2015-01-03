@@ -30,12 +30,6 @@
     <ClCompile Include="..\Classes\Actor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AirplaneListItem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BuyAirplaneWindow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\CharAnimCacheManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -90,6 +84,9 @@
     <ClCompile Include="..\Classes\BattleResultWindow.cpp">
       <Filter>src\Window</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BuyVehicleWindow.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -101,13 +98,7 @@
     <ClInclude Include="..\Classes\Actor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AirplaneListItem.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AppMacros.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BuyAirplaneWindow.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CharAnimCacheManager.h">
@@ -162,6 +153,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BattleResultWindow.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BuyVehicleWindow.h">
       <Filter>src\Window</Filter>
     </ClInclude>
   </ItemGroup>

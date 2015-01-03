@@ -2,7 +2,7 @@
 #include "TouchableSprite.h"
 #include "LobbyLayer.h"
 #include "Player.h"
-#include "BuyAirplaneWindow.h"
+#include "BuyVehicleWindow.h"
 #include "SimplePopup.h"
 #include "FontSize.h"
 #include "RecruitContext.h"

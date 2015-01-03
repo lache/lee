@@ -1,8 +1,8 @@
 #include "BattleResultWindow.h"
 #include "Player.h"
 #include "ResourceBar.h"
-#include "AirplaneListItem.h"
-#include "HelloWorldScene.h"
+
+
 #include "LobbyLayer.h"
 #include "FontSize.h"
 USING_NS_CC;

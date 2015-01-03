@@ -16,12 +16,11 @@ LOCAL_SRC_FILES := lee/main.cpp \
 				   ../../Classes/BattleLayer.cpp \
 				   ../../Classes/PopText.cpp \
 				   ../../Classes/LaneListItem.cpp \
-				   ../../Classes/BuyAirplaneWindow.cpp \
+				   ../../Classes/BuyVehicleWindow.cpp \
 				   ../../Classes/ResourceBar.cpp \
 				   ../../Classes/Rand.cpp \
 				   ../../Classes/Actor.cpp \
 				   ../../Classes/Player.cpp \
-				   ../../Classes/AirplaneListItem.cpp \
 				   ../../Classes/SimplePopup.cpp \
 				   ../../Classes/FontSize.cpp \
 				   ../../Classes/CheatWindow.cpp \

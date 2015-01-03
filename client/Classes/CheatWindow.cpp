@@ -1,8 +1,8 @@
 #include "CheatWindow.h"
 #include "Player.h"
 #include "ResourceBar.h"
-#include "AirplaneListItem.h"
-#include "HelloWorldScene.h"
+
+
 #include "FontSize.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
