@@ -18,7 +18,7 @@ LobbyLayer::LobbyLayer()
 {
 }
 
-Scene* LobbyLayer::createScene()
+Scene* LobbyLayer::createScene(const PlayerModelPtr& playerModel)
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
@@ -27,6 +27,7 @@ Scene* LobbyLayer::createScene()
     auto layer = LobbyLayer::create();
 
     layer->setName("LobbyLayer");
+    layer->_playerModel = playerModel;
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -61,7 +62,7 @@ bool LobbyLayer::init()
     baseNode->addChild(sprite);
 
     // 자원 표시 상단 바
-    _resBar = ResourceBar::create();
+    _resBar = ResourceBar::create(_playerModel);
     _resBar->setContentSize(Size(visibleSize.width, FontSize::getSmall()));
     _resBar->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
     _resBar->setNormalizedPosition(Vec2::ANCHOR_MIDDLE_TOP);
@@ -77,11 +78,11 @@ bool LobbyLayer::init()
     for (auto i = 0; i < 4; ++i)
     {
         auto sprite = LaneListItem::create("images/CyanSquare.png", "E");
-        sprite->addClickEventListener([&, i, baseNode](Ref* sender)
+        sprite->addClickEventListener([this, i, baseNode](Ref* sender)
         {
             //CCLOG(("Click " + std::to_string(i)).c_str());
 
-            BuyVehicleWindow::open(i);
+            BuyVehicleWindow::open(LaneId(i), _playerModel);
         });
         sprite->setAnchorPoint(Vec2::ZERO);
         sprite->setScaleX(newPlaneButtonGroup->getContentSize().width / sprite->getContentSize().width / 4);
@@ -129,9 +130,9 @@ void LobbyLayer::createBattleButton()
     addChild(battleButton);
 }
 
-void LobbyLayer::setLaneButtonString(int laneId, const std::string& text) const
+void LobbyLayer::setLaneButtonString(LaneId laneId, const std::string& text) const
 {
-    auto lli = dynamic_cast<LaneListItem*>(_laneButtonGroup->getChildren().at(laneId));
+    auto lli = dynamic_cast<LaneListItem*>(_laneButtonGroup->getChildren().at(laneId.GetValue()));
     lli->setString(text);
 }
 

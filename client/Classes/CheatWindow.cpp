@@ -1,8 +1,7 @@
 #include "CheatWindow.h"
 #include "Player.h"
 #include "ResourceBar.h"
-
-
+#include "PlayerModel.h"
 #include "FontSize.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -10,12 +9,12 @@ using namespace cocos2d::ui;
 
 CheatWindow* CheatWindow::s_ins;
 
-void CheatWindow::open()
+void CheatWindow::open(const PlayerModelPtr& playerModel)
 {
     if (s_ins)
         return;
 
-    Director::getInstance()->getRunningScene()->addChild(create());
+    Director::getInstance()->getRunningScene()->addChild(create(playerModel));
 }
 
 void CheatWindow::close()
@@ -27,11 +26,11 @@ void CheatWindow::close()
     s_ins = nullptr;
 }
 
-CheatWindow* CheatWindow::create()
+CheatWindow* CheatWindow::create(const PlayerModelPtr& playerModel)
 {
     auto ret = new (std::nothrow) CheatWindow();
 
-    if (ret && ret->initWithSize(Director::getInstance()->getVisibleSize()))
+    if (ret && ret->initWithPlayer(Director::getInstance()->getVisibleSize(), playerModel))
     {
         ret->setPosition(Director::getInstance()->getVisibleOrigin());
         ret->autorelease();
@@ -45,14 +44,14 @@ CheatWindow* CheatWindow::create()
     return ret;
 }
 
-bool CheatWindow::initWithSize(const Size& size)
+bool CheatWindow::initWithPlayer(const Size& size, const PlayerModelPtr& playerModel)
 {
     if (RelativeBox::initWithSize(size) == false)
         return false;
 
     auto vBox = createRootBox();
     vBox->addChild(createWinTitle("Cheat"));
-    vBox->addChild(createScrollView());
+    vBox->addChild(createScrollView(playerModel));
     vBox->addChild(createCloseButton("\nClose [X]\n "));
     addChild(vBox);
 
@@ -79,7 +78,7 @@ Node* CheatWindow::createWinTitle(const std::string& title) const
     return button;
 }
 
-Node* CheatWindow::createScrollView()
+Node* CheatWindow::createScrollView(const PlayerModelPtr& playerModel)
 {
     auto scrollView = ui::ScrollView::create();
     scrollView->setBackGroundColorType(BackGroundColorType::SOLID);
@@ -88,7 +87,7 @@ Node* CheatWindow::createScrollView()
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
     //scrollView->setContentSize(Size(getContentSize().width, 2 * FontSize::getSmall()));
 
-    auto scrollViewBox = createScrollViewBox();
+    auto scrollViewBox = createScrollViewBox(playerModel);
     scrollView->addChild(scrollViewBox);
 
     scrollView->setInnerContainerSize(scrollViewBox->getContentSize());
@@ -96,128 +95,15 @@ Node* CheatWindow::createScrollView()
     return scrollView;
 }
 
-Node* CheatWindow::createScrollViewBox()
+Node* CheatWindow::createScrollViewBox(const PlayerModelPtr& playerModel)
 {
     auto vBox = VBox::create();
-    vBox->addChild(createCheatButton("\nGold 0 (reset)\n ", []()
-    {
-        Player::gold = 0;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +100\n ", []()
-    {
-        Player::gold += 100;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +200\n ", []()
-    {
-        Player::gold += 200;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +300\n ", []()
-    {
-        Player::gold += 300;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +400\n ", []()
-    {
-        Player::gold += 400;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +500\n ", []()
-    {
-        Player::gold += 500;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +600\n ", []()
-    {
-        Player::gold += 600;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +700\n ", []()
-    {
-        Player::gold += 700;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +800\n ", []()
-    {
-        Player::gold += 800;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +900\n ", []()
-    {
-        Player::gold += 900;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1000\n ", []()
-    {
-        Player::gold += 1000;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1100\n ", []()
-    {
-        Player::gold += 1100;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1200\n ", []()
-    {
-        Player::gold += 1200;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1300\n ", []()
-    {
-        Player::gold += 1300;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1400\n ", []()
-    {
-        Player::gold += 1400;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1500\n ", []()
-    {
-        Player::gold += 1500;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1600\n ", []()
-    {
-        Player::gold += 1600;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1700\n ", []()
-    {
-        Player::gold += 1700;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
-    vBox->addChild(createCheatButton("\nGold +1800\n ", []()
-    {
-        Player::gold += 1800;
-        ResourceBar::s_ins->updateGold();
-        close();
-    }));
+    vBox->addChild(createCheatButton("\nGold +1000\n ", playerModel));
     vBox->setContentSize(Size(getContentSize().width, sumContentSizeHeight(vBox)));
     return vBox;
 }
 
-cocos2d::Node* CheatWindow::createCheatButton(const std::string& title, std::function<void()> action)
+cocos2d::Node* CheatWindow::createCheatButton(const std::string& title, const PlayerModelPtr& playerModel)
 {
     auto button = Button::create("images/YellowSquareSmall.png");
     button->setTitleColor(Color3B::BLACK);
@@ -225,9 +111,11 @@ cocos2d::Node* CheatWindow::createCheatButton(const std::string& title, std::fun
     button->setTitleText(title);
     button->setScale9Enabled(true);
     button->setContentSize(Size(getContentSize().width, button->getTitleRenderer()->getContentSize().height));
-    button->addClickEventListener([action](Ref* sender)
+    button->addClickEventListener([playerModel](Ref* sender)
     {
-        action();
+        playerModel->_gold += 1000;
+        ResourceBar::s_ins->updateGold();
+        close();
     });
     return button;
 }

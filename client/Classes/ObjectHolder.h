@@ -3,6 +3,7 @@
 
 #include "Typedefs.h"
 #include "ActorType.h"
+#include "VehicleModel.h"
 #include <map>
 
 class ObjectHolder
@@ -17,6 +18,14 @@ public:
     virtual bool Initialize()
     {
         // load templates
+        _vehicleMap[VehicleId(1)] = VehicleModelPtr(new VehicleModel);
+        _vehicleMap[VehicleId(2)] = VehicleModelPtr(new VehicleModel);
+        _vehicleMap[VehicleId(3)] = VehicleModelPtr(new VehicleModel);
+
+        _vehicleMap[VehicleId(1)]->_price = 170;
+        _vehicleMap[VehicleId(2)]->_price = 200;
+        _vehicleMap[VehicleId(3)]->_price = 230;
+
         return true;
     }
     VehicleModelPtr Find(VehicleId vehicleId)

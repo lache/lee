@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "TouchableSprite.h"
 #include "FontSize.h"
+#include "PlayerModel.h"
 #include "CheatWindow.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
@@ -10,10 +11,10 @@ using namespace cocos2d::ui;
 
 ResourceBar* ResourceBar::s_ins;
 
-ResourceBar* ResourceBar::create()
+ResourceBar* ResourceBar::create(const PlayerModelPtr& playerModel)
 {
     ResourceBar *btn = new (std::nothrow) ResourceBar;
-    if (btn && btn->init())
+    if (btn && btn->initWithPlayer(playerModel))
     {
         btn->autorelease();
         s_ins = btn;
@@ -23,19 +24,21 @@ ResourceBar* ResourceBar::create()
     return nullptr;
 }
 
-bool ResourceBar::init()
+bool ResourceBar::initWithPlayer(const PlayerModelPtr& playerModel)
 {
     if (Button::init("images/MagentaSquareSmall.png") == false)
         return false;
+
+    _playerModel = playerModel;
 
     setName("ResourceBar");
     setScale9Enabled(true);
     setTitleFontSize(FontSize::getSmall());
     setTitleColor(Color3B::BLACK);
 
-    addClickEventListener([](Ref* sender)
+    addClickEventListener([this](Ref* sender)
     {
-        CheatWindow::open();
+        CheatWindow::open(_playerModel);
     });
 
     return true;
@@ -43,5 +46,5 @@ bool ResourceBar::init()
 
 void ResourceBar::updateGold()
 {
-    setTitleText(StringUtils::format("GOLD %d", Player::gold));
+    setTitleText(StringUtils::format("GOLD %d", _playerModel == nullptr ? 0 : _playerModel->_gold));
 }

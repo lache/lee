@@ -1,9 +1,11 @@
 #include "AppDelegate.h"
 #include "LobbyLayer.h"
 #include "CharAnimCacheManager.h"
+#include "PlayerModel.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
+    : _playerModel(new PlayerModel)
 {
 }
 
@@ -53,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CharAnimCacheManager::load();
 
     // create a scene. it's an autorelease object
-    auto scene = LobbyLayer::createScene();
+    auto scene = LobbyLayer::createScene(_playerModel);
 
     // run
     director->runWithScene(scene);

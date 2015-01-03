@@ -14,6 +14,7 @@ public:
 
     Id() {}
     explicit Id(ValueType&& value) : _value(value) {}
+    explicit Id(const ValueType& value) : _value(value) {}
     ValueType GetValue() const { return _value; }
 
     bool operator == (const ConcreteType& other) const

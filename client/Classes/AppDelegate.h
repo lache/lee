@@ -2,7 +2,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-
+#include "Typedefs.h"
 /**
 @brief    The cocos2d Application.
 
@@ -34,6 +34,8 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+    PlayerModelPtr _playerModel;
 };
 
 #endif // _APP_DELEGATE_H_
