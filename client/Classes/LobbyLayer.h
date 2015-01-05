@@ -13,17 +13,17 @@ public:
     static cocos2d::Scene* createScene(const PlayerModelPtr& playerModel);
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();
+    bool initWithPlayer(const PlayerModelPtr& playerModel);
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
 
-    // implement the "static create()" method manually
-    CREATE_FUNC(LobbyLayer);
-
     void setLaneButtonString(LaneId laneId, const std::string& text) const;
 
     void updateResBar() const;
+
+CC_CONSTRUCTOR_ACCESS:
+    static LobbyLayer* create(const PlayerModelPtr& playerModel);
 
 private:
     LobbyLayer();
