@@ -18,16 +18,27 @@ LobbyLayer::LobbyLayer()
 {
 }
 
+LobbyLayer* LobbyLayer::create(const PlayerModelPtr& playerModel)
+{
+    auto layer = new (std::nothrow) LobbyLayer;
+    if (layer && layer->initWithPlayer(playerModel))
+    {
+        layer->autorelease();
+        return layer;
+    }
+    CC_SAFE_DELETE(layer);
+    return nullptr;
+}
+
 Scene* LobbyLayer::createScene(const PlayerModelPtr& playerModel)
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
 
     // 'layer' is an autorelease object
-    auto layer = LobbyLayer::create();
+    auto layer = LobbyLayer::create(playerModel);
 
     layer->setName("LobbyLayer");
-    layer->_playerModel = playerModel;
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -37,7 +48,7 @@ Scene* LobbyLayer::createScene(const PlayerModelPtr& playerModel)
 }
 
 // on "init" you need to initialize your instance
-bool LobbyLayer::init()
+bool LobbyLayer::initWithPlayer(const PlayerModelPtr& playerModel)
 {
     //////////////////////////////
     // 1. super init first
@@ -45,6 +56,8 @@ bool LobbyLayer::init()
     {
         return false;
     }
+
+    _playerModel = playerModel;
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
