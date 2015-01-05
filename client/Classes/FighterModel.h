@@ -7,7 +7,17 @@
 class FighterModel : public ActorModel
 {
 public:
-    // copy from template
+    FighterModel()
+        : _maxHp(0)
+        , _attack(0)
+        , _attackRange(0)
+        , _attackInterval(0)
+        , _moveSpeed(0)
+        , _weight(0)
+        , _hp(0)
+    {}
+
+public:
     float _maxHp;
 
     float _attack;

@@ -10,6 +10,13 @@ enum class CargoType
 class CargoModel
 {
 public:
+    CargoModel()
+        : _capacity(0)
+        , _cargoType(CargoType::Empty)
+        , _price(0)
+    {}
+
+public:
     float _capacity;
     CargoType _cargoType;
 

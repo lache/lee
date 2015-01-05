@@ -3,6 +3,7 @@
 
 enum class ActorType
 {
+    None,
     Vehicle,
     Fighter
 };

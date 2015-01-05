@@ -12,6 +12,12 @@ typedef std::shared_ptr<VehicleModel> VehicleModelPtr;
 class VehicleModel : public ActorModel
 {
 public:
+    VehicleModel()
+        : _maxCargoSize(0)
+        , _price(0)
+    {}
+
+public:
     std::vector<CargoModel> _cargos;
     int _maxCargoSize;
 

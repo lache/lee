@@ -7,6 +7,13 @@
 class ActorModel
 {
 public:
+    ActorModel()
+        : _type(ActorType::None)
+        , _actorId(0)
+        , _x(0), _y(0)
+    {}
+
+public:
     ActorType _type;
 
     long long /* very long */ int _actorId;

@@ -7,6 +7,12 @@
 class PlayerModel
 {
 public:
+    PlayerModel()
+        : _gold(0)
+        , _reputation(0)
+    {}
+
+public:
     std::map<LaneId, VehicleModelPtr> _vehicles;
     long long int _gold;
     long long int _reputation;
