@@ -7,6 +7,8 @@
 #include "LobbyLayer.h"
 #include "FontSize.h"
 #include "BuyController.h"
+#include "VehicleHolder.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;

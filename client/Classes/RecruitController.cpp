@@ -4,6 +4,7 @@
 #include "ObjectHolder.h"
 #include "VehicleModel.h"
 #include "FighterModel.h"
+#include "FighterHolder.h"
 
  ErrorCode RecruitController::Recruit(PlayerModelPtr player)
 {

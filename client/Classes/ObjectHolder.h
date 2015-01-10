@@ -11,32 +11,21 @@ public:
     virtual bool Initialize() = 0;
 };
 
-class VehicleHolder : public ObjectHolder
+template <typename ModelType, typename ModelIdType>
+class ModelHolder : public ObjectHolder
 {
 public:
-    virtual bool Initialize();
+    typedef ModelIdType IdType;
+    typedef std::shared_ptr<ModelType> PointerType;
 
-    VehicleModelPtr Find(VehicleId vehicleId)
+    PointerType Find(IdType modelId) const
     {
-        return _vehicleMap[vehicleId];
+        auto it = _modelMap.find(modelId);
+        return it != _modelMap.end() ? it->second : PointerType();
     }
 
-private:
-    std::map<VehicleId, VehicleModelPtr> _vehicleMap;
-};
-
-class FighterHolder : public ObjectHolder
-{
-public:
-    virtual bool Initialize();
-
-    FighterModelPtr Find(FighterId vehicleId)
-    {
-        return _fighterMap[vehicleId];
-    }
-
-private:
-    std::map<FighterId, FighterModelPtr> _fighterMap;
+protected:
+    std::map<IdType, PointerType> _modelMap;
 };
 
 ObjectHolder* GetObjectHolderInternal(ActorType actorType);

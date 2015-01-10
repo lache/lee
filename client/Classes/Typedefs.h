@@ -4,8 +4,9 @@
 #include "Id.h"
 #include <memory>
 
+#define ID_NAME(typeName) typeName##Id
 #define DECLARE_ID_TYPE(typeName, valueType) \
-    typedef Id<IdType::typeName, valueType> typeName##Id
+    typedef Id<IdType::typeName, valueType> ID_NAME(typeName)
 
 DECLARE_ID_TYPE(Lane, int);
 DECLARE_ID_TYPE(Vehicle, int);

@@ -111,7 +111,13 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectHolder.cpp">
+    <ClCompile Include="..\Classes\ObjectHolder.cpp">
+      <Filter>src\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FighterHolder.cpp">
+      <Filter>src\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\VehicleHolder.cpp">
       <Filter>src\Data</Filter>
     </ClCompile>
   </ItemGroup>
@@ -229,6 +235,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\VehicleHolder.h">
+      <Filter>src\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FighterHolder.h">
+      <Filter>src\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ObjectHolderRegister.h">
+      <Filter>src\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

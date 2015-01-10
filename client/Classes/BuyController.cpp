@@ -3,6 +3,7 @@
 #include "ActorModel.h"
 #include "ObjectHolder.h"
 #include "VehicleModel.h"
+#include "VehicleHolder.h"
 
 ErrorCode BuyController::BuyVehicle(PlayerModelPtr player, LaneId laneId, VehicleId vehicleId)
 {
@@ -12,7 +13,7 @@ ErrorCode BuyController::BuyVehicle(PlayerModelPtr player, LaneId laneId, Vehicl
         return ErrorCode::NoGold;
     }
 
-    if (player->_vehicles[laneId] == nullptr)
+    if (player->_vehicles[laneId] != nullptr)
     {
         return ErrorCode::LaneNotEmpty;
     }
