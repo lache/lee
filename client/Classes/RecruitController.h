@@ -8,6 +8,7 @@ class RecruitController
 {
 public:
     static ErrorCode Recruit(PlayerModelPtr player);
+    static ErrorCode StopRecruit(PlayerModelPtr player);
 };
 
 #endif

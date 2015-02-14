@@ -3,12 +3,12 @@
 
 #include "cocos2d.h"
 
-class BattleContext;
+class BattleModel;
 
 class Actor : public cocos2d::Sprite
 {
 public:
-    static Actor* create(int team, const std::shared_ptr<BattleContext>& battleContext);
+    static Actor* create(int team, const std::shared_ptr<BattleModel>& battleContext);
 
 	void setHp(float hp) { _hp = hp; }
 	void setMoveSpeed(float moveSpeed) { _moveSpeed = moveSpeed; }
@@ -17,7 +17,7 @@ public:
 	static void cleanupActors() { s_actors.clear(); }
 
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init(int team, const std::shared_ptr<BattleContext>& battleContext);
+    virtual bool init(int team, const std::shared_ptr<BattleModel>& battleContext);
 
 	virtual void update(float delta) override;
 
@@ -39,7 +39,7 @@ private:
 	float _hp;
 	float _attackPower;
 	bool _approachingToTarget;
-    std::shared_ptr<BattleContext> _battleContext;
+    std::shared_ptr<BattleModel> _battleContext;
 
 	static cocos2d::Vector<Actor*> s_actors;
 };

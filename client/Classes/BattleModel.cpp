@@ -1,4 +1,4 @@
-#include "BattleContext.h"
+#include "BattleModel.h"
 #include "PopText.h"
 #include "RecruitButton.h"
 #include "SelectStageButton.h"
@@ -7,22 +7,22 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
-BattleContext::BattleContext()
+BattleModel::BattleModel()
     : _team1Size(0),
     _team2Size(0)
 {
 }
 
-BattleContext::~BattleContext()
+BattleModel::~BattleModel()
 {
 }
 
-void BattleContext::setTeamSize(int team1, int team2)
+void BattleModel::setTeamSize(int team1, int team2)
 {
     _team1Size = team1;
     _team2Size = team2;
 }
-void BattleContext::onActorDead(Actor* a)
+void BattleModel::onActorDead(Actor* a)
 {
     if (a->getTeam() == 1)
         _team1Size -= 1;
@@ -35,12 +35,12 @@ void BattleContext::onActorDead(Actor* a)
         onTeam2Eliminated();
 }
 
-void BattleContext::onTeam1Eliminated()
+void BattleModel::onTeam1Eliminated()
 {
     BattleResultWindow::open(false, 10);
 }
 
-void BattleContext::onTeam2Eliminated()
+void BattleModel::onTeam2Eliminated()
 {
     BattleResultWindow::open(true, 100);
 }

@@ -1,5 +1,4 @@
 #include "BuyVehicleWindow.h"
-#include "Player.h"
 #include "ResourceBar.h"
 #include "ObjectHolder.h"
 #include "VehicleModel.h"
@@ -8,7 +7,7 @@
 #include "FontSize.h"
 #include "BuyController.h"
 #include "VehicleHolder.h"
-
+#include "PlayerModel.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
@@ -148,8 +147,6 @@ cocos2d::Node* BuyVehicleWindow::createVehicleButton(const VehicleId& vehicleId,
         auto director = Director::getInstance();
         auto root = director->getRunningScene()->getChildByName<LobbyLayer*>("LobbyLayer");
 
-        auto price = CalculatePriceFromVehicleId(vehicleId);
-
         if (result == ErrorCode::NoGold)
         {
             auto popup = SimplePopup::create("** Insufficient funds **", Color4B::RED);
@@ -159,10 +156,8 @@ cocos2d::Node* BuyVehicleWindow::createVehicleButton(const VehicleId& vehicleId,
         }
         else if (result == ErrorCode::Success)
         {
-            Player::gold -= price;
-
             auto buttonText = StringUtils::format("V %d", vehicleId);
-            root->setLaneButtonString(BuyVehicleWindow::s_ins->getLane(), buttonText);
+            root->setLaneButtonString(getLane(), buttonText);
 
             root->updateResBar();
 

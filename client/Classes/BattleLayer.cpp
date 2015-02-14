@@ -1,7 +1,8 @@
 #include "BattleLayer.h"
 #include "LaneListItem.h"
-#include "RecruitContext.h"
-#include "BattleContext.h"
+#include "PlayerModel.h"
+#include "BattleModel.h"
+#include "BattleModel.h"
 #include "Actor.h"
 #include "Rand.h"
 #include "cocos-ext.h"
@@ -10,26 +11,22 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-
-Scene* BattleLayer::scene(int stageId, const std::shared_ptr<RecruitContext>& recruitContext)
+Scene* BattleLayer::scene(int stageId, const PlayerModelPtr& playerModel)
 {
     auto scene = Scene::create();
 
     BattleLayer *layer = BattleLayer::create();
 
     layer->setName("BattleLayer");
-    layer->initBattleContext(stageId, recruitContext);
+    layer->initBattleContext(stageId, playerModel);
 
     scene->addChild(layer);
 
-    // return the scene
     return scene;
 }
 
 bool BattleLayer::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if (!Layer::init())
     {
         return false;
@@ -50,30 +47,6 @@ bool BattleLayer::init()
     });
     hBox->addChild(goBackButton);
 
-    /*auto resetButton = Button::create("images/CyanSquare.png");
-    resetButton->setTitleText("RESET");
-    resetButton->addClickEventListener([this](Ref* sender)
-    {
-        resetBattleground();
-    });
-    hBox->addChild(resetButton);
-
-    auto spawnTeam1 = Button::create("images/CyanSquare.png");
-    spawnTeam1->setTitleText("SPAWN TEAM 1");
-    spawnTeam1->addClickEventListener([this](Ref* sender)
-    {
-        spawnActor(1);
-    });
-    hBox->addChild(spawnTeam1);
-
-    auto spawnTeam2 = Button::create("images/CyanSquare.png");
-    spawnTeam2->setTitleText("SPAWN TEAM 2");
-    spawnTeam2->addClickEventListener([this](Ref* sender)
-    {
-        spawnActor(2);
-    });
-    hBox->addChild(spawnTeam2);*/
-
     _battleground = Node::create();
     _battleground->setPosition(origin);
     addChild(_battleground);
@@ -83,22 +56,25 @@ bool BattleLayer::init()
     return true;
 }
 
-void BattleLayer::initBattleContext(int stageId, const std::shared_ptr<RecruitContext>& recruitContext)
+void BattleLayer::initBattleContext(int stageId, const PlayerModelPtr& playerModel)
 {   
     _stageId = stageId;
 
-    _battleContext.reset(new BattleContext);
-
-    for (auto i = 0; i < recruitContext->getCurrentRecruitSize(); ++i)
-        spawnActor(1);
-
-    auto enemySize = 5 * stageId;
-    for (auto i = 0; i < enemySize; ++i)
+    for (auto& kv : playerModel->_battle->_fighter_map)
+    {
+        for (auto i = 0U; i < kv.second.size(); ++i)
+        {
+            spawnActor(1);
+        }
+    }
+    
+    for (auto i = 0U; i < playerModel->_battle->_enemy_map.size(); ++i)
+    {
         spawnActor(2);
-
-    _battleContext->setTeamSize(recruitContext->getCurrentRecruitSize(), enemySize);
-
-    recruitContext->clearRecruit();
+    }
+    
+    //_battleContext->setTeamSize(playerModel->getCurrentRecruitSize(), enemySize);
+    //playerModel->clearRecruit();
 }
 
 void BattleLayer::resetBattleground()
@@ -129,7 +105,7 @@ void BattleLayer::spawnActor(int team)
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    auto actor = Actor::create(team, _battleContext);
+    auto actor = Actor::create(team, _battleModel);
     actor->setHp(10 + Rand::get() * 10);
     actor->setMoveSpeed(50 + (-10 + Rand::get() * 20));
     const static float spawnRange = 200;

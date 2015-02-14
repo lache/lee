@@ -3,13 +3,12 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
-class RecruitContext;
+#include "Typedefs.h"
 
 class RecruitButton : public cocos2d::ui::Button
 {
 public:
-    static RecruitButton* create(const cocos2d::Size& size, const std::shared_ptr<RecruitContext>& recruitContext);
+    static RecruitButton* create(const cocos2d::Size& size, const PlayerModelPtr& playerModel);
 
     enum class ButtonState : std::int8_t
     {
@@ -20,7 +19,7 @@ public:
     void setButtonState(ButtonState state, int currentRecruitSize = 0);
 
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init(const cocos2d::Size& size, const std::shared_ptr<RecruitContext>& recruitContext);
+    virtual bool init(const cocos2d::Size& size, const PlayerModelPtr& playerModel);
 
 private:
     RecruitButton();

@@ -2,16 +2,14 @@
 #define __BattleLayer_SCENE_H__
 
 #include "cocos2d.h"
-
-class RecruitContext;
-class BattleContext;
+#include "Typedefs.h"
 
 class BattleLayer : public cocos2d::Layer
 {
 public:
     virtual bool init();
 
-    static cocos2d::Scene* scene(int stageId, const std::shared_ptr<RecruitContext>& recruitContext);
+    static cocos2d::Scene* scene(int stageId, const PlayerModelPtr& playerModel);
 
     // implement the "static node()" method manually
     CREATE_FUNC(BattleLayer);
@@ -19,11 +17,11 @@ public:
 private:
     void resetBattleground();
     void spawnActor(int team);
-    void createBattleContext(const std::shared_ptr<RecruitContext>& recruitContext);
-    void initBattleContext(int stageId, const std::shared_ptr<RecruitContext>& recruitContext);
+    void createBattleContext(const PlayerModelPtr& playerModel);
+    void initBattleContext(int stageId, const PlayerModelPtr& playerModel);
     Node* _battleground;
     int _stageId;
-    std::shared_ptr<BattleContext> _battleContext;
+    BattleModelPtr _battleModel;
 };
 
 #endif // __BattleLayer_SCENE_H__

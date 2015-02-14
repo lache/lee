@@ -1,5 +1,5 @@
 #include "ResourceBar.h"
-#include "Player.h"
+
 #include "TouchableSprite.h"
 #include "FontSize.h"
 #include "PlayerModel.h"

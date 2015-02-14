@@ -20,6 +20,7 @@ public:
     std::string _name;
 
     BattleModelPtr _battle;
+    RecruitModelPtr _recruit;
 };
 
 #endif

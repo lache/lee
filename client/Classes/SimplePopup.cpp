@@ -1,7 +1,7 @@
 #include "SimplePopup.h"
 #include "TouchableSprite.h"
 
-#include "Player.h"
+
 #include "BuyVehicleWindow.h"
 #include "FontSize.h"
 #include "cocos-ext.h"

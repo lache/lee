@@ -11,6 +11,7 @@
 DECLARE_ID_TYPE(Lane, int);
 DECLARE_ID_TYPE(Vehicle, int);
 DECLARE_ID_TYPE(Fighter, int);
+DECLARE_ID_TYPE(Stage, int);
 
 #undef DECLARE_ID_TYPE
 

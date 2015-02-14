@@ -5,11 +5,11 @@ namespace cocos2d { class Node; }
 class RecruitButton;
 class SelectStageButton;
 
-class RecruitContext
+class RecruitView
 {
 public:
-    RecruitContext();
-    ~RecruitContext();
+    RecruitView();
+    ~RecruitView();
 
     void startRecruit(cocos2d::Node* ground, const int targetRecruitSize);
     void stopRecruit();

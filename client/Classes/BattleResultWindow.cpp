@@ -1,8 +1,5 @@
 #include "BattleResultWindow.h"
-#include "Player.h"
 #include "ResourceBar.h"
-
-
 #include "LobbyLayer.h"
 #include "FontSize.h"
 USING_NS_CC;
@@ -146,7 +143,7 @@ Node* BattleResultWindow::createCloseButton(const std::string& title, int score)
     {
         auto gold = CalculateGoldFromScore(score);
 
-        Player::gold += gold;
+        //Player::gold += gold;
         ResourceBar::s_ins->updateGold();
         close();
     });

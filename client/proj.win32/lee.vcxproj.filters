@@ -72,16 +72,10 @@
     <ClCompile Include="..\Classes\Actor.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BattleContext.cpp">
-      <Filter>src\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\CharAnimCacheManager.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LaneListItem.cpp">
-      <Filter>src\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PopText.cpp">
@@ -91,9 +85,6 @@
       <Filter>src\View</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\RecruitButton.cpp">
-      <Filter>src\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\RecruitContext.cpp">
       <Filter>src\View</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ResourceBar.cpp">
@@ -119,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\VehicleHolder.cpp">
       <Filter>src\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RecruitView.cpp">
+      <Filter>src\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BattleModel.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,16 +194,10 @@
     <ClInclude Include="..\Classes\AppMacros.h">
       <Filter>src\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\BattleContext.h">
-      <Filter>src\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\CharAnimCacheManager.h">
       <Filter>src\View</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LaneListItem.h">
-      <Filter>src\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
       <Filter>src\View</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PopText.h">
@@ -216,9 +207,6 @@
       <Filter>src\View</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\RecruitButton.h">
-      <Filter>src\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\RecruitContext.h">
       <Filter>src\View</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ResourceBar.h">
@@ -244,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ObjectHolderRegister.h">
       <Filter>src\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RecruitView.h">
+      <Filter>src\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

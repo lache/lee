@@ -1,11 +1,10 @@
 #include "SelectStageButton.h"
 #include "TouchableSprite.h"
 #include "LobbyLayer.h"
-#include "Player.h"
 #include "BuyVehicleWindow.h"
 #include "SimplePopup.h"
 #include "FontSize.h"
-#include "RecruitContext.h"
+#include "PlayerModel.h"
 #include "SelectStageWindow.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
@@ -17,10 +16,10 @@ SelectStageButton::SelectStageButton()
 {
 }
 
-SelectStageButton* SelectStageButton::create(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
+SelectStageButton* SelectStageButton::create(const Size& size, const PlayerModelPtr& playerModel)
 {
 	SelectStageButton *btn = new (std::nothrow) SelectStageButton;
-    if (btn && btn->init(size, recruitContext))
+    if (btn && btn->init(size, playerModel))
 	{
 		btn->autorelease();
 		return btn;
@@ -29,7 +28,7 @@ SelectStageButton* SelectStageButton::create(const Size& size, const std::shared
 	return nullptr;
 }
 
-bool SelectStageButton::init(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
+bool SelectStageButton::init(const Size& size, const PlayerModelPtr& playerModel)
 {
     if (Button::init("images/SelectStageButton.png") == false)
         return false;
@@ -42,11 +41,11 @@ bool SelectStageButton::init(const Size& size, const std::shared_ptr<RecruitCont
     setContentSize(size);
     setButtonState(ButtonState::CANNOT_SELECT_STAGE);
 
-    recruitContext->setSelectStageButton(this);
+    //playerModel->setSelectStageButton(this);
     
     addClickEventListener([=](Ref* sender)
     {
-        SelectStageWindow::open(recruitContext);
+        SelectStageWindow::open(playerModel);
     });
 
     return true;

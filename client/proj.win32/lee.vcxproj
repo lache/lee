@@ -141,9 +141,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\Actor.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\BattleContext.cpp" />
     <ClCompile Include="..\Classes\BattleController.cpp" />
     <ClCompile Include="..\Classes\BattleLayer.cpp" />
+    <ClCompile Include="..\Classes\BattleModel.cpp" />
     <ClCompile Include="..\Classes\BattleResultWindow.cpp" />
     <ClCompile Include="..\Classes\BuyVehicleWindow.cpp" />
     <ClCompile Include="..\Classes\CargoModel.cpp" />
@@ -154,11 +154,10 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\LaneListItem.cpp" />
     <ClCompile Include="..\Classes\LobbyLayer.cpp" />
     <ClCompile Include="..\Classes\ObjectHolder.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\PopText.cpp" />
     <ClCompile Include="..\Classes\Rand.cpp" />
     <ClCompile Include="..\Classes\RecruitButton.cpp" />
-    <ClCompile Include="..\Classes\RecruitContext.cpp" />
+    <ClCompile Include="..\Classes\RecruitView.cpp" />
     <ClCompile Include="..\Classes\RecruitController.cpp" />
     <ClCompile Include="..\Classes\ResourceBar.cpp" />
     <ClCompile Include="..\Classes\SelectStageButton.cpp" />
@@ -175,7 +174,6 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\ActorType.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
-    <ClInclude Include="..\Classes\BattleContext.h" />
     <ClInclude Include="..\Classes\BattleController.h" />
     <ClInclude Include="..\Classes\BattleModel.h" />
     <ClInclude Include="..\Classes\BattleLayer.h" />
@@ -193,12 +191,11 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\LobbyLayer.h" />
     <ClInclude Include="..\Classes\ObjectHolder.h" />
     <ClInclude Include="..\Classes\ObjectHolderRegister.h" />
-    <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\PlayerModel.h" />
     <ClInclude Include="..\Classes\PopText.h" />
     <ClInclude Include="..\Classes\Rand.h" />
     <ClInclude Include="..\Classes\RecruitButton.h" />
-    <ClInclude Include="..\Classes\RecruitContext.h" />
+    <ClInclude Include="..\Classes\RecruitView.h" />
     <ClInclude Include="..\Classes\RecruitController.h" />
     <ClInclude Include="..\Classes\RecruitModel.h" />
     <ClInclude Include="..\Classes\ResourceBar.h" />

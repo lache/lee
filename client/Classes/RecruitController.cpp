@@ -6,7 +6,7 @@
 #include "FighterModel.h"
 #include "FighterHolder.h"
 
- ErrorCode RecruitController::Recruit(PlayerModelPtr player)
+ErrorCode RecruitController::Recruit(PlayerModelPtr player)
 {
     if (player->_battle != nullptr)
     {
@@ -14,13 +14,13 @@
     }
 
     BattleModelPtr battle(new BattleModel);
-    FighterModelPtr fighter = GetObjectHolder<FighterHolder>(ActorType::Fighter).Find(FighterId(1));
+    auto fighter = GetObjectHolder<FighterHolder>(ActorType::Fighter).Find(FighterId(1));
 
     for (auto it : player->_vehicles)
     {
-        VehicleModelPtr vehicle = it.second;
+        auto vehicle = it.second;
 
-        float maxCapacity = 0;
+        auto maxCapacity = 0.0f;
         for (auto& cargo : vehicle->_cargos)
         {
             maxCapacity += cargo._capacity;
@@ -33,9 +33,14 @@
             maxCapacity -= fighter->_weight;
         }
 
-        battle->_figher_map.insert(std::make_pair(vehicle, fighters));
+        battle->_fighter_map.insert(std::make_pair(vehicle, fighters));
     }
 
     player->_battle = battle;
+    return ErrorCode::Success;
+}
+
+ErrorCode RecruitController::StopRecruit(PlayerModelPtr player)
+{
     return ErrorCode::Success;
 }

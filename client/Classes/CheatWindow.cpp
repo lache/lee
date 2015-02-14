@@ -1,5 +1,5 @@
 #include "CheatWindow.h"
-#include "Player.h"
+
 #include "ResourceBar.h"
 #include "PlayerModel.h"
 #include "FontSize.h"

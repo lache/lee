@@ -16,14 +16,14 @@ public:
     void setLane(LaneId laneId) { _laneId = laneId; }
     LaneId getLane() const { return _laneId; }
 
-    static BuyVehicleWindow* s_ins;
-
 CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithLaneId(const cocos2d::Size& size, LaneId laneId, const PlayerModelPtr& playerModel);
 
 private:
     BuyVehicleWindow();
     ~BuyVehicleWindow();
+
+    static BuyVehicleWindow* s_ins;
 
     cocos2d::Node* createRootBox() const;
     cocos2d::Node* createWinTitle(const std::string& title) const;

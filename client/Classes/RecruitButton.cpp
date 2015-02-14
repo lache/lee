@@ -1,11 +1,11 @@
 #include "RecruitButton.h"
 #include "TouchableSprite.h"
 #include "LobbyLayer.h"
-#include "Player.h"
 #include "BuyVehicleWindow.h"
 #include "SimplePopup.h"
 #include "FontSize.h"
-#include "RecruitContext.h"
+#include "PlayerModel.h"
+#include "RecruitController.h"
 #include "cocos-ext.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
@@ -17,10 +17,10 @@ RecruitButton::RecruitButton()
 {
 }
 
-RecruitButton* RecruitButton::create(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
+RecruitButton* RecruitButton::create(const Size& size, const PlayerModelPtr& playerModel)
 {
 	RecruitButton *btn = new (std::nothrow) RecruitButton;
-    if (btn && btn->init(size, recruitContext))
+    if (btn && btn->init(size, playerModel))
 	{
 		btn->autorelease();
 		return btn;
@@ -29,7 +29,7 @@ RecruitButton* RecruitButton::create(const Size& size, const std::shared_ptr<Rec
 	return nullptr;
 }
 
-bool RecruitButton::init(const Size& size, const std::shared_ptr<RecruitContext>& recruitContext)
+bool RecruitButton::init(const Size& size, const PlayerModelPtr& playerModel)
 {
     if (Button::init("images/RecruitButton.png") == false)
         return false;
@@ -41,8 +41,6 @@ bool RecruitButton::init(const Size& size, const std::shared_ptr<RecruitContext>
     setScale9Enabled(true);
     setContentSize(size);
     setButtonState(ButtonState::CAN_RECRUIT);
-
-    recruitContext->setRecruitButton(this);
 
     addClickEventListener([=](Ref* sender)
     {
@@ -56,7 +54,8 @@ bool RecruitButton::init(const Size& size, const std::shared_ptr<RecruitContext>
             recruitGround = Node::create();
             root->addChild(recruitGround);
         }
-        recruitContext->startRecruit(recruitGround, 20);
+
+        RecruitController::Recruit(playerModel);
     });
 
     return true;

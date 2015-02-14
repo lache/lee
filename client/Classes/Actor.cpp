@@ -1,12 +1,12 @@
 #include "Actor.h"
 #include <algorithm>
 #include "PopText.h"
-#include "BattleContext.h"
+#include "BattleModel.h"
 USING_NS_CC;
 
 Vector<Actor*> Actor::s_actors;
 
-Actor* Actor::create(int team, const std::shared_ptr<BattleContext>& battleContext)
+Actor* Actor::create(int team, const std::shared_ptr<BattleModel>& battleContext)
 {
 	Actor* a = new (std::nothrow) Actor;
 	if (a && a->init(team, battleContext))
@@ -18,7 +18,7 @@ Actor* Actor::create(int team, const std::shared_ptr<BattleContext>& battleConte
 	return nullptr;
 }
 
-bool Actor::init(int team, const std::shared_ptr<BattleContext>& battleContext)
+bool Actor::init(int team, const std::shared_ptr<BattleModel>& battleContext)
 {
 	if (Sprite::init() == false)
 		return false;
@@ -87,7 +87,7 @@ void Actor::update(float delta)
 
 void Actor::onActorDead()
 {
-    _battleContext->onActorDead(this);
+    //_battleContext->onActorDead(this);
 }
 
 void Actor::tryFindNewTarget()

@@ -1,11 +1,11 @@
-#include "RecruitContext.h"
+#include "RecruitView.h"
 #include "PopText.h"
 #include "RecruitButton.h"
 #include "SelectStageButton.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
-RecruitContext::RecruitContext()
+RecruitView::RecruitView()
     : _targetRecruitSize(0),
     _currentRecruitSize(0),
     _recruitButton(nullptr),
@@ -14,11 +14,11 @@ RecruitContext::RecruitContext()
 {
 }
 
-RecruitContext::~RecruitContext()
+RecruitView::~RecruitView()
 {
 }
 
-void RecruitContext::startRecruit(cocos2d::Node* ground, const int targetRecruitSize)
+void RecruitView::startRecruit(cocos2d::Node* ground, const int targetRecruitSize)
 {
     _targetRecruitSize += targetRecruitSize;
 
@@ -62,7 +62,7 @@ void RecruitContext::startRecruit(cocos2d::Node* ground, const int targetRecruit
     _ground = ground;
 }
 
-void RecruitContext::onRecruitArrived(Node* ground, Node* fighter)
+void RecruitView::onRecruitArrived(Node* ground, Node* fighter)
 {
     PopText::create(ground, fighter->getPosition(), "+1");
 
@@ -84,7 +84,7 @@ void RecruitContext::onRecruitArrived(Node* ground, Node* fighter)
     }
 }
 
-void RecruitContext::onRecruitFinished()
+void RecruitView::onRecruitFinished()
 {
     if (_recruitButton)
     {
@@ -97,12 +97,12 @@ void RecruitContext::onRecruitFinished()
     }
 }
 
-void RecruitContext::stopRecruit()
+void RecruitView::stopRecruit()
 {
     _ground->removeAllChildren();
 }
 
-void RecruitContext::clearRecruit()
+void RecruitView::clearRecruit()
 {
     _targetRecruitSize = 0;
     _currentRecruitSize = 0;

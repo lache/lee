@@ -19,5 +19,6 @@ ErrorCode BuyController::BuyVehicle(PlayerModelPtr player, LaneId laneId, Vehicl
     }
 
     player->_vehicles[laneId] = vehicle->Clone();
+    player->_gold -= vehicle->_price;
     return ErrorCode::Success;
 }

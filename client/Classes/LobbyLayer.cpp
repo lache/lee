@@ -5,7 +5,7 @@
 #include "BuyVehicleWindow.h"
 #include "FontSize.h"
 #include "PopText.h"
-#include "RecruitContext.h"
+#include "RecruitModel.h"
 #include "RecruitButton.h"
 #include "SelectStageButton.h"
 #include "cocos-ext.h"
@@ -14,7 +14,6 @@ USING_NS_CC;
 using namespace cocos2d::ui;
 
 LobbyLayer::LobbyLayer()
-    : _recruitContext(new RecruitContext)
 {
 }
 
@@ -105,9 +104,9 @@ bool LobbyLayer::initWithPlayer(const PlayerModelPtr& playerModel)
     }
     _laneButtonGroup = newPlaneButtonGroup;
         
-    baseNode->addChild(RecruitButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext));
+    baseNode->addChild(RecruitButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _playerModel));
 
-    auto selectButton = SelectStageButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _recruitContext);
+    auto selectButton = SelectStageButton::create(Size(getContentSize().width / 2, getContentSize().height / 10), _playerModel);
     selectButton->setPosition(Vec2(baseNode->getContentSize().width / 2, getContentSize().height / 10));
     baseNode->addChild(selectButton);
     
@@ -126,21 +125,6 @@ void LobbyLayer::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-}
-
-void LobbyLayer::createBattleButton()
-{
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
-
-    auto battleButton = LaneListItem::create("Images/CyanSquare.png", "BATTLE");
-    battleButton->addClickEventListener([](Ref* sender)
-    {
-        Director::getInstance()->pushScene(BattleLayer::scene(1, std::shared_ptr<RecruitContext>(new RecruitContext)));
-    });
-    battleButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
-    battleButton->setPosition(origin + Vec2(visibleSize.width, 0));
-    addChild(battleButton);
 }
 
 void LobbyLayer::setLaneButtonString(LaneId laneId, const std::string& text) const

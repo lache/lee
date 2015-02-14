@@ -1,24 +1,21 @@
 #include "SelectStageWindow.h"
-#include "Player.h"
 #include "ResourceBar.h"
-
-
 #include "BattleLayer.h"
 #include "FontSize.h"
-#include "RecruitContext.h"
-
+#include "playerModel.h"
+#include "RecruitController.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
 SelectStageWindow* SelectStageWindow::s_ins;
 
-void SelectStageWindow::open(const std::shared_ptr<RecruitContext>& recruitContext)
+void SelectStageWindow::open(const PlayerModelPtr& playerModel)
 {
     if (s_ins)
         return;
 
-    Director::getInstance()->pushScene(SelectStageWindow::scene(recruitContext));
+    Director::getInstance()->pushScene(SelectStageWindow::scene(playerModel));
 }
 
 void SelectStageWindow::close()
@@ -30,11 +27,11 @@ void SelectStageWindow::close()
     s_ins = nullptr;
 }
 
-Scene* SelectStageWindow::scene(const std::shared_ptr<RecruitContext>& recruitContext)
+Scene* SelectStageWindow::scene(const PlayerModelPtr& playerModel)
 {
     auto scene = Scene::create();
     
-    auto layer = SelectStageWindow::create(recruitContext);
+    auto layer = SelectStageWindow::create(playerModel);
 
     layer->setName("SelectStageWindow");
 
@@ -45,13 +42,13 @@ Scene* SelectStageWindow::scene(const std::shared_ptr<RecruitContext>& recruitCo
     return scene;
 }
 
-SelectStageWindow* SelectStageWindow::create(const std::shared_ptr<RecruitContext>& recruitContext)
+SelectStageWindow* SelectStageWindow::create(const PlayerModelPtr& playerModel)
 {
     auto ret = new (std::nothrow) SelectStageWindow();
 
     if (ret && ret->initWithSize(Director::getInstance()->getVisibleSize() * 0.8f))
     {
-        ret->_recruitContext = recruitContext;
+        ret->_playerModel = playerModel;
         ret->setPosition(Director::getInstance()->getVisibleOrigin() + Director::getInstance()->getVisibleSize() * 0.1f);
         ret->autorelease();
 
@@ -119,9 +116,9 @@ void SelectStageWindow::startBattle(int stageId)
 {
     close();
 
-    _recruitContext->stopRecruit();
+    RecruitController::StopRecruit(_playerModel);
 
-    Director::getInstance()->pushScene(BattleLayer::scene(stageId, _recruitContext));
+    Director::getInstance()->pushScene(BattleLayer::scene(stageId, _playerModel));
 }
 
 Node* SelectStageWindow::createScrollViewBox()

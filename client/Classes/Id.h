@@ -3,7 +3,7 @@
 
 enum class IdType
 {
-    Lane, Vehicle, Fighter
+    Lane, Vehicle, Fighter, Stage
 };
 
 template <IdType IdTypeValue, typename ValueType>
